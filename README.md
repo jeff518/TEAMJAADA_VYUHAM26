@@ -1,57 +1,60 @@
 # 🛡️ SecureDoc Pipeline
 
-> **Zero-Trust Document Ingestion, Antivirus Inspection & Automated Three-Way Invoice Processing Platform**
+### Zero-Trust Financial Document Security, Verification & Three-Way Matching Platform
 
-SecureDoc Pipeline is an enterprise-grade document processing and validation system designed with a **Zero-Trust Multi-Door Architecture**. It isolates untrusted uploads, scans for advanced malware and executable disguise techniques, extracts financial entities using multimodal vision models, verifies purchase orders via three-way matching, detects wire transfer fraud, and registers every state change in a tamper-evident SHA-256 cryptographic hash chain.
+SecureDoc Pipeline is a security-focused financial document processing platform designed to protect organizations from malicious uploads, document manipulation, invoice fraud, and financial discrepancies.
 
-## 🔐 Core Features
+It combines **multi-layer document security, AI-powered financial data extraction, automated three-way matching, fraud detection, and tamper-evident audit logging** into a unified workflow.
+
+The platform follows a Zero-Trust approach: every uploaded document is treated as untrusted until it passes the required security and validation checks.
+
+---
+
+## 🚀 Key Features
 
 ### 1. Multi-Layer Document Security
 
-Every uploaded document passes through independent security checks before processing.
+Every uploaded document passes through multiple security checks before processing.
 
-| Security Check | Purpose |
-|---|---|
-| Magic Byte Validation | Detects files disguised using incorrect extensions |
-| MIME Verification | Identifies discrepancies between declared and actual file types |
-| ClamAV Integration | Scans documents for known malware signatures |
-| PDF Structure Analysis | Identifies suspicious PDF objects and structures |
-| JavaScript Detection | Detects embedded scripts and potentially dangerous actions |
-| Embedded File Detection | Identifies attachments concealed inside documents |
-| Sandbox Isolation | Restricts document parsing within an isolated environment |
+- **Magic Byte Validation:** Detects files disguised using incorrect extensions.
+- **MIME Type Verification:** Compares declared and actual file types.
+- **Antivirus Integration:** Scans documents for known malware signatures using ClamAV.
+- **PDF Structure Analysis:** Identifies suspicious PDF objects and structures.
+- **JavaScript Detection:** Checks for embedded scripts and potentially dangerous content.
+- **Embedded File Detection:** Identifies attachments concealed inside documents.
 
 ### 2. Isolated Document Processing
 
 Untrusted documents are processed inside a restricted environment.
 
-The sandbox architecture is designed to:
+The sandbox is designed to:
 
 - Prevent untrusted files from accessing application resources.
-- Restrict network access during document parsing.
+- Restrict network access during document processing.
 - Limit CPU, memory, and execution time.
 - Use temporary storage for intermediate processing.
 - Prevent unsafe document content from directly reaching trusted application components.
 
 ### 3. AI-Powered Financial Data Extraction
 
-SecureDoc uses multimodal document intelligence to extract financial information from invoices, including scanned documents and complex layouts.
+SecureDoc uses document intelligence to extract financial information from invoices, including scanned documents and complex layouts.
 
 **Extracted information includes:**
 
 - Invoice number and date.
 - Vendor name and identification.
-- Purchase Order reference.
+- Purchase order reference.
 - Item descriptions and quantities.
 - Unit prices and tax information.
 - Subtotal and total amount.
 - Payment instructions.
 - Bank account details and IBAN/SWIFT information.
 
-Extracted data is converted into a structured schema before entering the financial validation stage.
+Extracted information is converted into a structured schema before entering the financial validation stage.
 
 **AI security controls:**
 
-- Treat document contents as untrusted data, never as executable instructions.
+- Treat document contents as untrusted data.
 - Separate system instructions from document content.
 - Validate extracted values against predefined schemas.
 - Check financial arithmetic and field consistency.
@@ -61,341 +64,230 @@ Extracted data is converted into a structured schema before entering the financi
 
 One of SecureDoc's primary financial validation capabilities is automated three-way matching.
 
-It compares three independent business records:
+It compares three independent financial records:
 
-| Document | What it verifies |
+| Document | Purpose |
 |---|---|
-| Purchase Order (PO) | What the organization ordered |
-| Goods Receipt Note (GRN) | What the organization actually received |
-| Supplier Invoice | What the supplier is requesting payment for |
+| Purchase Order (PO) | Records what was ordered |
+| Goods Receipt Note (GRN) | Confirms what was received |
+| Invoice | Records what the vendor is charging |
+
+The system checks:
+
+- Purchase order reference consistency.
+- Vendor information.
+- Item descriptions and quantities.
+- Unit prices and total amounts.
+- Received quantities against invoiced quantities.
+- Tax and arithmetic discrepancies.
 
 **Example:**
 
-| Parameter | Purchase Order | GRN | Invoice |
+| Validation Field | Purchase Order | GRN | Invoice |
 |---|---:|---:|---:|
-| Product | Laptop | Laptop | Laptop |
-| Quantity | 10 | 10 | 10 |
-| Unit Price | ₹50,000 | — | ₹50,000 |
-| Total | ₹5,00,000 | 10 received | ₹5,00,000 |
+| Product Quantity | 100 | 100 | 100 |
+| Unit Price | ₹500 | — | ₹500 |
+| Total Amount | ₹50,000 | — | ₹50,000 |
 
-<details>
-<summary><strong>How the matching engine works</strong></summary>
+<badge color="success">Match</badge> The records are consistent for the illustrated checks.
 
-1. Retrieve the approved Purchase Order.
-2. Retrieve the corresponding Goods Receipt Note.
-3. Extract invoice line items and financial information.
-4. Compare product identifiers, quantities, unit prices, taxes, and totals.
-5. Calculate discrepancies using configurable business tolerances.
-6. Generate a matching result with supporting evidence.
-7. Route the invoice according to the configured approval policy.
+If quantities, prices, vendor details, or other required fields do not match, SecureDoc flags the transaction for further review instead of automatically approving it.
 
-**Possible outcomes:**
+### 5. Financial Fraud Detection
 
-- MATCHED — All required checks pass.
-- PARTIAL MATCH — Acceptable discrepancies require policy evaluation.
-- MISMATCH — Significant differences are detected.
-- MISSING RECORD — Required PO or GRN information is unavailable.
+SecureDoc is designed to identify suspicious financial changes and inconsistencies.
 
-A missing document must never be treated as a successful match.
+Detection capabilities include:
 
-</details>
-
-### 5. Vendor Bank Redirection Protection
-
-Protects organizations against invoice payment redirection and Business Email Compromise (BEC) attacks.
-
-The system compares payment instructions extracted from an invoice against verified vendor master records.
-
-**Detection capabilities:**
-
-- Unexpected bank account changes.
-- IBAN/SWIFT discrepancies.
-- Unregistered payment destinations.
+- Duplicate invoice identification.
+- Bank account and payment instruction discrepancy detection.
 - Vendor identity inconsistencies.
-- Changes to payment instructions between invoices.
+- Unusual invoice amounts.
+- Suspicious document modifications.
+- Purchase order and invoice mismatches.
 
-Suspicious changes trigger manual verification rather than automatic payment approval.
+Bank account changes and other high-risk discrepancies should trigger additional verification rather than automatic approval.
 
-### 6. Duplicate Invoice Detection
+### 6. Tamper-Evident Audit Logging
 
-Identifies potentially duplicated financial claims using multiple document attributes.
+Important document and transaction state changes are recorded in an audit trail.
 
-Detection signals include:
+The proposed audit mechanism uses:
 
-- Invoice number.
-- Vendor identity.
-- Invoice date.
-- Invoice amount.
-- Purchase Order reference.
-- Document fingerprint and normalized financial attributes.
+- SHA-256 cryptographic hashing.
+- Hash-linked audit records.
+- Document integrity verification.
+- Transaction state tracking.
+- Tamper-evident audit history.
 
-The system can identify both exact duplicates and potential duplicate submissions with modified filenames or formatting.
-
-### 7. Risk-Based Approval Engine
-
-SecureDoc combines security results and financial validation results to determine the appropriate processing route.
-
-| Processing Result | Recommended Action |
-|---|---|
-| Malware detected | Block and quarantine |
-| Suspicious document structure | Quarantine for inspection |
-| Extraction uncertainty | Manual verification |
-| PO/GRN mismatch | Finance review |
-| Bank account discrepancy | Payment security review |
-| Duplicate invoice | Block duplicate processing |
-| All required checks passed | Eligible for policy-based approval |
-
-Automatic approval is subject to configured business rules and must never override a security failure.
-
-### 8. Tamper-Evident SHA-256 Audit Trail
-
-Every significant processing event is recorded in a cryptographically linked audit chain.
-
-Each audit record includes:
-
-- Event ID.
-- Timestamp.
-- Actor or service identity.
-- Event type.
-- Event payload or payload digest.
-- Previous record hash.
-- Current record hash.
-
-**Hash calculation:**
-
-\[
-H_n = SHA256(H_{n-1} \Vert EventData_n)
-\]
-
-This creates a sequential integrity relationship between audit records.
-
-Any modification to an earlier record causes subsequent hash verification to fail.
-
-> The hash chain provides tamper evidence. For stronger protection against privileged administrators, production deployments should additionally use signed checkpoints and independently stored audit records.
+This helps make unauthorized modifications detectable and improves transaction traceability.
 
 ---
 
-## 🔄 End-to-End Processing Workflow
+## 🏗️ System Architecture
 
 ```text
-DOCUMENT UPLOAD
-      │
-      ▼
-AUTHENTICATION & ACCESS CONTROL
-      │
-      ▼
-FILE TYPE & SIZE VALIDATION
-      │
-      ▼
-ANTIVIRUS SCANNING
-      │
-      ├── MALICIOUS ──► QUARANTINE
-      │
-      ▼
-STRUCTURAL DOCUMENT INSPECTION
-      │
-      ├── SUSPICIOUS ──► QUARANTINE
-      │
-      ▼
-ISOLATED DOCUMENT PARSING
-      │
-      ▼
-AI-BASED DATA EXTRACTION
-      │
-      ▼
-EXTRACTION VALIDATION
-      │
-      ▼
-THREE-WAY MATCHING
-      │
-      ▼
-VENDOR & DUPLICATE FRAUD CHECKS
-      │
-      ▼
-RISK & POLICY EVALUATION
-      │
-      ├── ELIGIBLE ──► APPROVAL WORKFLOW
-      │
-      └── FLAGGED ───► HUMAN REVIEW
-      │
-      ▼
-CRYPTOGRAPHIC AUDIT LOGGING
-      │
-      ▼
-FINAL PROCESSING STATUS
+          UNTRUSTED DOCUMENT SOURCES
+                      |
+                      v
+             DOCUMENT UPLOAD
+                      |
+                      v
+              FASTAPI GATEWAY
+                      |
+                      v
+          MULTI-LAYER SECURITY CHECKS
+                      |
+       +--------------+--------------+
+       |              |              |
+       v              v              v
+   File Type      Antivirus       PDF / Script
+   Validation     Scanning        Inspection
+       |              |              |
+       +--------------+--------------+
+                      |
+                      v
+             ISOLATED PROCESSING
+                      |
+                      v
+             AI DATA EXTRACTION
+                      |
+                      v
+            STRUCTURED VALIDATION
+                      |
+                      v
+             THREE-WAY MATCHING
+                      |
+                      v
+              FRAUD DETECTION
+                      |
+           +----------+----------+
+           |                     |
+           v                     v
+      APPROVAL              MANUAL REVIEW
+           |                     |
+           +----------+----------+
+                      |
+                      v
+             AUDIT LOGGING
+                      |
+                      v
+              DATABASE STORAGE
 ```
 
 ---
 
-## 🛠️ Technology Stack
+## 🔄 End-to-End Workflow
 
-| Layer | Technology |
+1. **Upload:** A user uploads an invoice or supporting financial document.
+2. **Inspection:** The system validates file signatures, MIME types, and document structure.
+3. **Antivirus Scanning:** The uploaded file is scanned for known malware.
+4. **Isolation:** The document is processed in a restricted environment.
+5. **Extraction:** AI extracts relevant financial information.
+6. **Validation:** Extracted information is checked for consistency and correctness.
+7. **Three-Way Matching:** Purchase orders, goods receipt notes, and invoices are compared.
+8. **Fraud Analysis:** Suspicious payment instructions, duplicates, and discrepancies are flagged.
+9. **Decision:** The transaction proceeds to the appropriate approval or manual-review stage.
+10. **Audit:** Relevant processing events and decisions are recorded.
+
+---
+
+## 🧰 Technology Stack
+
+| Component | Technology |
 |---|---|
-| Frontend | React, TypeScript, Tailwind CSS |
+| Frontend | React, TypeScript |
 | Backend | Python, FastAPI |
-| AI & Document Intelligence | Google Gemini Multimodal API |
+| AI / Document Processing | Multimodal AI, OCR |
+| Database | PostgreSQL |
+| Background Tasks | Celery |
+| Message Broker / Cache | Redis |
 | Antivirus | ClamAV |
-| Database | PostgreSQL 16 |
-| Background Processing | Celery |
-| Message Broker / Cache | Redis 7 |
-| Security | JWT, SHA-256, Zero-Trust Architecture |
-| Browser Integration | Chrome Extension |
-| Containerization | Docker & Docker Compose |
+| Security | SHA-256, file validation, sandbox isolation |
+| Deployment | Docker, Vercel |
+
+*Adjust this list to reflect the technologies actually implemented in the repository.*
 
 ---
 
 ## 📂 Project Structure
 
 ```text
-securedoc-pipeline/
+SecureDoc-Pipeline/
 │
-├── dashboard/
+├── frontend/
 │   ├── src/
 │   ├── public/
-│   ├── package.json
-│   └── vite.config.ts
+│   └── package.json
 │
 ├── backend/
-│   ├── app/
-│   │   ├── api/
-│   │   ├── core/
-│   │   ├── security/
-│   │   ├── ingestion/
-│   │   ├── antivirus/
-│   │   ├── sandbox/
-│   │   ├── extraction/
-│   │   ├── matching/
-│   │   ├── fraud/
-│   │   ├── audit/
-│   │   ├── workers/
-│   │   └── main.py
-│   │
-│   ├── requirements.txt
-│   └── Dockerfile
+│   ├── main.py
+│   ├── routes/
+│   ├── services/
+│   ├── security/
+│   ├── extraction/
+│   └── matching/
 │
-├── extension/
-│   ├── manifest.json
-│   ├── popup/
-│   └── background/
-│
-├── database/
-│   └── migrations/
+├── scripts/
 │
 ├── tests/
 │
 ├── docker-compose.yml
+├── Dockerfile
+├── requirements.txt
 ├── .env.example
-├── Makefile
+├── .gitignore
 └── README.md
 ```
 
-*The structure above describes the proposed organization; adjust it to match the actual repository.*
+*The structure above is a suggested organization. Update it to match the actual repository.*
 
 ---
 
-## ⚡ Getting Started
+## ⚙️ Getting Started
 
 ### Prerequisites
 
-Ensure the following tools are installed:
+Install the following before running the project:
 
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- [Docker Compose](https://docs.docker.com/compose/)
-- [Node.js 20+](https://nodejs.org/)
-- [Python 3.11+](https://www.python.org/)
-- Git
+- Python 3.10 or later.
+- Node.js and npm.
+- PostgreSQL.
+- Redis.
+- Docker (recommended).
+- ClamAV, if antivirus scanning is enabled.
 
 ### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/securedoc/securedoc-pipeline.git
-
 cd securedoc-pipeline
 ```
 
 ### 2. Configure Environment Variables
 
-```bash
-cp .env.example .env
-```
-
-Configure the required credentials and service settings in `.env`.
+Create a `.env` file using `.env.example` as a reference.
 
 ```env
-DATABASE_URL=postgresql+asyncpg://user:password@postgres:5432/securedoc
+DATABASE_URL=postgresql://user:password@localhost:5432/securedoc
 
-REDIS_URL=redis://redis:6379/0
+REDIS_URL=redis://localhost:6379/0
 
-CELERY_BROKER_URL=redis://redis:6379/1
+SECRET_KEY=replace_with_a_secure_secret
 
-CLAMAV_HOST=clamav
+CLAMAV_HOST=localhost
 CLAMAV_PORT=3310
-
-GEMINI_API_KEY=your_api_key
-
-JWT_SECRET=your_secure_random_secret
-
-MAX_FILE_SIZE_BYTES=20971520
-
-MATCH_VARIANCE_TOLERANCE_PERCENT=1.0
-
-STP_AUTO_APPROVAL_THRESHOLD=95.0
 ```
 
-**Important:** Replace placeholder credentials with secure values. Never commit `.env` files or API keys to version control.
+Use your actual configuration values. Never commit secrets or production credentials.
 
-### 3. Launch the Application
-
-```bash
-docker compose up -d --build
-```
-
-### 4. Verify Running Services
+### 3. Install Backend Dependencies
 
 ```bash
-docker compose ps
-```
-
-### 5. Access the Application
-
-| Service | Local URL |
-|---|---|
-| Web Dashboard | http://localhost:3000 |
-| Backend API | http://localhost:8000 |
-| API Documentation | http://localhost:8000/docs |
-| ClamAV | localhost:3310 |
-| PostgreSQL | localhost:5432 |
-| Redis | localhost:6379 |
-
----
-
-## 🌐 Browser Extension Setup
-
-SecureDoc provides a Chrome extension for submitting documents directly from browser workflows.
-
-1. Open `chrome://extensions/`.
-2. Enable Developer Mode.
-3. Select **Load unpacked**.
-4. Choose the project's `extension/` directory.
-5. Open the SecureDoc Shield extension.
-6. Authenticate using an appropriately scoped API token.
-7. Submit supported documents for security inspection.
-
-The extension communicates with the backend ingestion gateway, ensuring that uploaded documents follow the same security pipeline.
-
----
-
-## 💻 Local Development
-
-### Backend
-
-```bash
-cd backend
-
 python -m venv venv
 ```
 
-Activate the environment:
+Activate the virtual environment:
 
 **Windows:**
 
@@ -415,343 +307,92 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Start the API:
+### 4. Install Frontend Dependencies
 
 ```bash
-uvicorn app.main:app --reload --port 8000
-```
-
-Start the Celery worker:
-
-```bash
-celery -A app.workers.celery_app worker -l info
-```
-
-### Frontend
-
-```bash
-cd dashboard
-
+cd frontend
 npm install
+```
 
+### 5. Run the Application
+
+Start the backend using the actual FastAPI entry point:
+
+```bash
+uvicorn main:app --reload
+```
+
+Start the frontend:
+
+```bash
 npm run dev
 ```
 
-Build for production:
-
-```bash
-npm run build
-```
+If your project uses a different entry point or directory structure, adjust these commands accordingly.
 
 ---
 
-## ⚙️ Configuration Reference
+## 🔐 Security Principles
 
-| Variable | Purpose |
-|---|---|
-| `DATABASE_URL` | PostgreSQL connection string |
-| `REDIS_URL` | Redis connection |
-| `CELERY_BROKER_URL` | Celery task broker |
-| `CLAMAV_HOST` | Antivirus service hostname |
-| `CLAMAV_PORT` | Antivirus daemon port |
-| `GEMINI_API_KEY` | Multimodal extraction API credentials |
-| `JWT_SECRET` | Authentication token signing secret |
-| `MAX_FILE_SIZE_BYTES` | Maximum upload size |
-| `MATCH_VARIANCE_TOLERANCE_PERCENT` | Configurable financial matching tolerance |
-| `STP_AUTO_APPROVAL_THRESHOLD` | Configured approval eligibility threshold |
+SecureDoc follows these core security principles:
 
----
+- **Zero Trust:** Never trust uploaded documents by default.
+- **Defense in Depth:** Apply multiple independent security checks.
+- **Least Privilege:** Restrict permissions for document processing.
+- **Input Validation:** Validate extracted and user-provided data.
+- **Isolation:** Separate untrusted document processing from trusted services.
+- **Human Oversight:** Escalate high-risk transactions for manual review.
+- **Auditability:** Maintain traceable records of important processing events.
 
-## 🧪 Testing & Validation
-
-SecureDoc should be validated against both security threats and financial processing edge cases.
-
-Suggested test categories:
-
-**Document Security**
-- Valid PDF uploads.
-- Executable files disguised as PDFs.
-- MIME type mismatches.
-- EICAR antivirus test files.
-- PDFs containing embedded JavaScript.
-- Malformed and corrupted documents.
-
-**Financial Validation**
-- Perfect PO, GRN, and invoice matches.
-- Quantity discrepancies.
-- Price discrepancies.
-- Tax calculation errors.
-- Missing PO or GRN records.
-- Duplicate invoice submissions.
-
-**Fraud Detection**
-- Unauthorized bank account changes.
-- Modified payment instructions.
-- Vendor identity inconsistencies.
-- Repeated invoice numbers.
-- Potential duplicate transactions.
-
-**Audit Integrity**
-- Sequential hash verification.
-- Modified historical event detection.
-- Missing audit event detection.
-- Invalid actor or timestamp records.
+A successful antivirus scan or AI extraction result alone is not sufficient to approve a financial transaction.
 
 ---
 
-## 🛡️ Security Principles
+## 🗺️ Development Roadmap
 
-SecureDoc is designed around the following principles:
-
-1. **Never Trust Input:** All incoming documents are untrusted by default.
-2. **Defense in Depth:** Multiple independent security gates protect the processing pipeline.
-3. **Least Privilege:** Each service receives only the permissions it requires.
-4. **Isolation by Design:** Untrusted documents are processed in restricted environments.
-5. **Validate Before Acting:** AI-generated information must pass deterministic validation.
-6. **Human Oversight:** High-risk financial decisions require authorized review.
-7. **Audit Everything:** Important processing events must be traceable.
-8. **Fail Securely:** Security failures must never silently result in approval.
+- [ ] Multi-format document upload and validation.
+- [ ] ClamAV antivirus integration.
+- [ ] Restricted document-processing sandbox.
+- [ ] AI-powered invoice data extraction.
+- [ ] Purchase order and GRN ingestion.
+- [ ] Automated three-way matching.
+- [ ] Duplicate invoice detection.
+- [ ] Bank detail discrepancy detection.
+- [ ] Risk-based approval workflow.
+- [ ] Tamper-evident audit logging.
+- [ ] Comprehensive automated testing.
+- [ ] Production deployment and monitoring.
 
 ---
 
-## 🚀 Future Roadmap
+## 🎯 Project Objective
 
-| Feature | Planned Enhancement |
-|---|---|
-| Advanced AI Security | Improved prompt injection and adversarial document detection |
-| Intelligent Fraud Detection | Vendor behavior and transaction anomaly analysis |
-| Advanced OCR | Improved extraction from multilingual and low-quality documents |
-| Enterprise Integration | ERP and accounting system integration |
-| Risk Intelligence | Explainable transaction risk scoring |
-| Compliance | Configurable financial audit and retention policies |
-| Advanced Audit | Digital signatures and independently anchored audit checkpoints |
-| Scalability | Distributed processing and horizontally scalable workers |
+SecureDoc aims to address a critical gap in financial document automation: processing invoices efficiently without compromising document security, financial accuracy, or transaction integrity.
+
+Rather than relying exclusively on AI-based extraction, the platform combines deterministic security controls, structured financial validation, and human oversight.
+
+**The goal is not simply to process documents faster. It is to make financial document processing safer, more verifiable, and more reliable.**
 
 ---
 
 ## 🤝 Contributing
 
-Contributions, suggestions, and security improvements are welcome.
+Contributions, suggestions, and improvements are welcome.
 
 1. Fork the repository.
 2. Create a feature branch.
-
-```bash
-git checkout -b feature/your-feature-name
-```
-
 3. Commit your changes.
-
-```bash
-git commit -m "feat: add your feature"
-```
-
-4. Push the branch.
-
-```bash
-git push origin feature/your-feature-name
-```
-
-5. Open a Pull Request describing your changes.
+4. Submit a pull request.
 
 ---
 
-## ⚠️ Responsible Security Disclosure
+## 📄 License
 
-If you discover a security vulnerability, please report it privately to the repository maintainers.
-
-Do not publicly disclose exploitable vulnerabilities before maintainers have had an opportunity to investigate and address them.
-
----
-
-## 📜 License
-
-Specify the project's license before distributing or deploying SecureDoc Pipeline. See the `LICENSE` file for applicable terms.
+This project is distributed under the license specified in the repository.
 
 ---
 
 <p align="center">
-  <strong>🛡️ SecureDoc Pipeline</strong>
-  <br/>
-  <em>From Untrusted Documents to Verified Financial Transactions.</em>
-  <br/><br/>
-  Built for a more secure, intelligent, and transparent financial ecosystem.
+  <b>SecureDoc Pipeline</b><br>
+  Securing Documents. Verifying Transactions. Building Trust.
 </p>
-                       +---------------------------------------------------+
-                       |             Policy & Approval Router              |
-                       +---------------------------------------------------+
-                                    /                     \
-                      Clean & Matched (STP)         Quarantine / Mismatch
-                                  │                               │
-                                  ▼                               ▼
-                         [ AUTO-APPROVAL ]             [ HUMAN-IN-THE-LOOP ]
-                                  │                               │
-                                  └───────────────┬───────────────┘
-                                                  ▼
-                       +---------------------------------------------------+
-                       |     Immutable SHA-256 Cryptographic Hash Chain    |
-                       +---------------------------------------------------+
-                                                  │
-                                                  ▼
-                       +---------------------------------------------------+
-                       |         PostgreSQL 16 & Redis Celery Queue        |
-                       +---------------------------------------------------+
-```
-
----
-
-## ⚡ Quick Start
-
-### Prerequisites
-- [Docker](https://docs.docker.com/get-docker/) & [Docker Compose](https://docs.docker.com/compose/) (v2.20+)
-- Node.js 20+ (for local frontend development)
-- Python 3.11+ (for local backend development)
-
-### Launch Cluster in 60 Seconds
-```bash
-# 1. Clone the repository
-git clone https://github.com/securedoc/securedoc-pipeline.git
-cd securedoc-pipeline
-
-# 2. Copy the environment configuration
-cp .env.example .env
-
-# 3. Spin up all 6 microservices
-docker compose up -d
-```
-
-### Access Services
-| Component | URL | Description |
-| :--- | :--- | :--- |
-| **Web Dashboard** | `http://localhost:3000` | React + TypeScript + Tailwind UI |
-| **Backend API** | `http://localhost:8000` | FastAPI Gateway |
-| **Interactive Docs** | `http://localhost:8000/docs` | Swagger / OpenAPI Explorer |
-| **ClamAV Engine** | `localhost:3310` | Antivirus Scanning Daemon |
-| **PostgreSQL 16** | `localhost:5432` | Relational Storage & Master Ledger |
-| **Redis 7** | `localhost:6379` | Celery Broker & Rate Limiting |
-
----
-
-## 🧩 Browser Extension Installation
-
-SecureDoc includes a zero-friction browser extension for Google Chrome and Chromium-based browsers:
-
-1. Open your browser and navigate to `chrome://extensions/`.
-2. Toggle **Developer mode** in the top-right corner.
-3. Click **Load unpacked**.
-4. Select the `extension/` directory from this repository.
-5. Click the **SecureDoc Shield** icon in your toolbar, authenticate with your API token, and drag-and-drop any invoice on web pages directly into the zero-trust pipeline.
-
----
-
-## 🔒 Security Architecture (The 4 Doors)
-
-### 🚪 Door 1: Pre-Execution Format & Antivirus Gate
-- **Magic Bytes Validation**: Inspects byte headers (e.g., verifying `%PDF-1.7` magic bytes) to prevent disguised executable payloads (`.exe`, `.dll`, `.bat`).
-- **MIME Discrepancy Gate**: Detects spoofed MIME headers by running OS-level file heuristics.
-- **ClamAV Signature Daemon**: Scans against real-time signature definitions for trojans, exploits (e.g., CVE-2023-38831), and malicious wrappers.
-
-### 📦 Sandbox Quarantine Isolation
-Files pass through an ephemeral, read-only container sandbox where dangerous properties are neutralized before semantic analysis.
-
-### 🚪 Door 2: Structural & Content Inspection
-- **PDF Grammar & Object Audit**: Scans the cross-reference (`xref`) table and trailer dictionary for malformed or recursive structures.
-- **Macro & JavaScript Stripping**: Detects `/JavaScript`, `/Launch`, `/OpenAction`, and `/EmbeddedFiles` dictionaries.
-- **Obfuscated Stream Analysis**: Flags non-standard filter chains designed to bypass antivirus memory inspection.
-
-### 🚪 Door 3: Post-Extraction & AI Defense
-- **Gemini 1.5 Pro Multimodal Vision**: Extracts unstructured financial tables, headers, line items, and payment instructions.
-- **Prompt Injection Defense**: Defends against indirect prompt injection embedded in document white space or metadata designed to hijack the LLM.
-- **Hallucination Entropy Gate**: Computes token confidence and enforces schema validation against enterprise finance rules.
-
-### 🚪 Door 4: Business Logic, Matching & Anti-Fraud Gate
-- **Three-Way Matching**: Cross-references Invoice line items and amounts against approved Purchase Orders (`PO`) and Warehouse Goods Receipt Notes (`GRN`).
-- **Vendor Bank Redirection Protection**: Compares the invoiced IBAN/SWIFT against registered master records to prevent wire fraud.
-- **Duplicate Detection**: Hashes document invariants to identify re-billed invoices across fiscal cycles.
-
-### ⛓️ Tamper-Evident SHA-256 Hash Chain
-Every event (upload, scan, extraction, decision, audit) creates a new block containing:
-$$\text{Block Hash} = \text{SHA-256}(\text{EventID} + \text{Timestamp} + \text{PrevHash} + \text{Actor} + \text{Payload})$$
-Any alteration to past logs breaks the hash link and triggers an immediate cryptographic integrity alarm on the dashboard.
-
----
-
-## 🛠️ Development Setup
-
-### Dashboard Frontend
-```bash
-cd dashboard
-
-# Install dependencies
-npm install
-
-# Start Vite dev server with proxy to API
-npm run dev
-
-# Build production bundle
-npm run build
-```
-
-### Backend API & Worker
-```bash
-cd backend
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # Or `venv\Scripts\activate` on Windows
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Start FastAPI dev server
-uvicorn app.main:app --reload --port 8000
-
-# Start Celery worker
-celery -A app.workers.celery_app worker -l info
-```
-
----
-
-## ⚙️ Configuration Reference
-
-| Variable | Default | Purpose |
-| :--- | :--- | :--- |
-| `DATABASE_URL` | `postgresql+asyncpg://...` | Asynchronous PostgreSQL connection string |
-| `REDIS_URL` | `redis://:password@localhost:6379/0` | Redis caching and rate limiting |
-| `CELERY_BROKER_URL`| `redis://:password@localhost:6379/1` | Celery task queue broker |
-| `CLAMAV_HOST` | `clamav` | Hostname of the ClamAV daemon container |
-| `CLAMAV_PORT` | `3310` | Port for the ClamAV TCP socket |
-| `GEMINI_API_KEY` | *(Set in `.env`)* | Google Gemini API key for multimodal vision |
-| `JWT_SECRET` | *(Random 32-byte hex)* | Key for signing zero-trust authorization tokens |
-| `MAX_FILE_SIZE_BYTES` | `20971520` (20 MB) | Maximum permitted single upload payload |
-| `MATCH_VARIANCE_TOLERANCE_PERCENT` | `1.0` | Maximum acceptable variance for straight-through approval |
-| `STP_AUTO_APPROVAL_THRESHOLD` | `95.0` | Score percentage required for auto-approval |
-
----
-
-## ⌨️ Makefile Shortcuts
-
-```bash
-make help          # Show command palette
-make build         # Build all Docker images
-make up            # Start all services in daemon mode
-make down          # Stop all containers
-make logs          # Tail streaming logs across the cluster
-make status        # Inspect container health
-make migrate       # Apply database migrations
-make clean         # Prune dangling containers and volumes
-```
-
----
-
-## 🤝 Contributing & Security Vulnerability Disclosure
-
-1. Fork the repository and create your feature branch: `git checkout -b feature/zero-trust-enhancement`.
-2. Commit your changes: `git commit -m 'feat: Add heuristic entropy scanner'`.
-3. Push to the branch: `git push origin feature/zero-trust-enhancement`.
-4. Open a Pull Request.
-
-*To report a security vulnerability, please contact `security@securedoc.internal` with PGP-encrypted details.*
-#   v y u h a 
- 
- 
