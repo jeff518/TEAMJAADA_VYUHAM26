@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "name": "docupilot-ai-vyuham",
+  "framework": "vite",
+  "buildCommand": "npm run build --prefix dashboard",
+  "outputDirectory": "dashboard/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
