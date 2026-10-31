@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DocuPilot AI — Extension Shield</title>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans text-xs antialiased selection:bg-brand-500 selection:text-white">
+  <div id="app" class="flex flex-col min-h-[520px] w-[390px] border border-slate-800 bg-slate-950">
+
+    <!-- Global App Header -->
+    <header class="bg-slate-900/90 border-b border-slate-800 px-4 py-3 flex items-center justify-between backdrop-blur-md sticky top-0 z-50">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-brand-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-brand-500/25">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center space-x-1.5">
+            <h1 class="text-xs font-bold text-white tracking-tight">DocuPilot AI</h1>
+            <span class="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded bg-brand-500/20 text-brand-400 border border-brand-500/30">SHIELD</span>
+          </div>
+          <p class="text-[10px] text-slate-400 font-mono">Zero-Trust Multi-Door Defense</p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-2">
+        <!-- Live Connection Status Indicator -->
+        <div id="connection-badge" class="flex items-center space-x-1.5 px-2 py-0.5 rounded-full bg-slate-900 text-[10px] font-mono font-medium text-slate-300 border border-slate-700/80">
+          <span id="connection-dot" class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span id="connection-text">127.0.0.1:8001</span>
+        </div>
+
+        <!-- Options Page Link -->
+        <button id="btn-open-options" class="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors" title="Settings">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- VIEW 1: LOGIN FORM -->
+    <main id="view-login" class="flex-1 p-4 flex flex-col justify-center space-y-3 hidden">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3 shadow-xl">
+        <div class="text-center mb-1">
+          <h2 class="text-sm font-bold text-white">Sign In to DocuPilot AI</h2>
+          <p class="text-[11px] text-slate-400">Zero-Trust Pipeline Authentication</p>
+        </div>
+
+        <div id="login-error" class="hidden p-2 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-300 text-[11px]"></div>
+
+        <form id="form-login" class="space-y-3">
+          <div>
+            <label class="block text-[11px] font-mono text-slate-400 mb-1" for="login-backend-url">Backend Server URL</label>
+            <input type="url" id="login-backend-url" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-brand-500 font-mono" placeholder="http://localhost:8001" value="http://localhost:8001" required>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-mono text-slate-400 mb-1" for="login-email">Email Address</label>
+            <input type="email" id="login-email" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-brand-500 font-mono" placeholder="analyst@securedoc.internal" value="analyst@securedoc.internal" required>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-mono text-slate-400 mb-1" for="login-password">Password</label>
+            <input type="password" id="login-password" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-brand-500 font-mono" placeholder="••••••••" value="Analyst123!" required>
+          </div>
+
+          <button type="submit" id="btn-login-submit" class="w-full py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-semibold text-xs transition shadow-lg shadow-brand-600/30">
+            <span>Connect & Sign In</span>
+          </button>
+        </form>
+
+        <div class="pt-2 border-t border-slate-800 text-center">
+          <button type="button" id="btn-quick-guest-login" class="text-[11px] text-brand-400 hover:underline font-mono">
+            ⚡ Quick Connect as Security Analyst (One-Click)
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- VIEW 2: AUTHENTICATED DASHBOARD -->
+    <main id="view-dashboard" class="flex-1 p-3.5 space-y-3 overflow-y-auto">
+
+      <!-- Active 3-Way Handshake Agent Status Banner -->
+      <div class="bg-gradient-to-r from-brand-950/80 to-indigo-950/80 border border-brand-500/30 rounded-xl p-3 shadow-lg">
+        <div class="flex items-center justify-between mb-1.5">
+          <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-400 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            3-Way Handshake Agent Active
+          </span>
+          <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-brand-500/20 text-brand-300 border border-brand-500/40">
+            DUAL-SHIELD
+          </span>
+        </div>
+        <p class="text-[11px] text-slate-300 leading-snug">
+          Client Extension Sandbox + Server AI Gateway Intercept prevent unverified direct uploads.
+        </p>
+      </div>
+
+      <!-- User Profile Pill -->
+      <div class="flex items-center justify-between bg-slate-900/80 px-3 py-2 rounded-xl border border-slate-800 shadow-sm">
+        <div class="flex items-center space-x-2">
+          <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-brand-500 to-indigo-600 text-white font-bold flex items-center justify-center text-xs shadow" id="user-avatar">
+            A
+          </div>
+          <div>
+            <div id="user-name" class="font-semibold text-white text-xs truncate max-w-[170px]">Security Analyst</div>
+            <div id="user-email" class="text-[10px] font-mono text-slate-400 truncate max-w-[170px]">analyst@securedoc.internal</div>
+          </div>
+        </div>
+
+        <button id="btn-logout" class="px-2 py-1 text-[10px] font-mono text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg border border-slate-700 transition">
+          Logout
+        </button>
+      </div>
+
+      <!-- Real-Time Platform Stats Grid -->
+      <div class="grid grid-cols-3 gap-2">
+        <div class="bg-slate-900/80 p-2.5 rounded-xl border border-slate-800 text-center shadow-sm">
+          <div id="stat-total" class="text-sm font-bold font-mono text-white">--</div>
+          <div class="text-[9px] font-mono uppercase tracking-wider text-slate-400">Total Scanned</div>
+        </div>
+        <div class="bg-slate-900/80 p-2.5 rounded-xl border border-slate-800 text-center shadow-sm">
+          <div id="stat-pending" class="text-sm font-bold font-mono text-emerald-400">--</div>
+          <div class="text-[9px] font-mono uppercase tracking-wider text-slate-400">Clean / Allow</div>
+        </div>
+        <div class="bg-slate-900/80 p-2.5 rounded-xl border border-slate-800 text-center shadow-sm">
+          <div id="stat-approved" class="text-sm font-bold font-mono text-rose-400">--</div>
+          <div class="text-[9px] font-mono uppercase tracking-wider text-slate-400">Threats Caught</div>
+        </div>
+      </div>
+
+      <!-- Multi-Door Security Status Indicators -->
+      <div class="grid grid-cols-2 gap-1.5 p-2 bg-slate-900/40 rounded-xl border border-slate-800/80 text-[10px] font-mono">
+        <div class="flex items-center justify-between px-2 py-1 bg-slate-950/60 rounded-lg border border-slate-800/60">
+          <span class="text-slate-400">Door 1: Antivirus</span>
+          <span class="text-emerald-400 font-bold">ARMED</span>
+        </div>
+        <div class="flex items-center justify-between px-2 py-1 bg-slate-950/60 rounded-lg border border-slate-800/60">
+          <span class="text-slate-400">Door 2: AI Injection</span>
+          <span class="text-emerald-400 font-bold">ARMED</span>
+        </div>
+        <div class="flex items-center justify-between px-2 py-1 bg-slate-950/60 rounded-lg border border-slate-800/60">
+          <span class="text-slate-400">Door 3: VLM Extract</span>
+          <span class="text-cyan-400 font-bold">ACTIVE</span>
+        </div>
+        <div class="flex items-center justify-between px-2 py-1 bg-slate-950/60 rounded-lg border border-slate-800/60">
+          <span class="text-slate-400">Door 4: Math DTE</span>
+          <span class="text-emerald-400 font-bold">VERIFIED</span>
+        </div>
+      </div>
+
+      <!-- Quick Document Dropzone -->
+      <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3 space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="font-semibold text-xs text-white">Quick Document Scanner</span>
+          <span class="text-[9px] font-mono text-slate-400">Max 10 MB</span>
+        </div>
+
+        <div id="quick-dropzone" class="border border-dashed border-slate-700 hover:border-brand-500 rounded-xl p-3 text-center bg-slate-950/50 hover:bg-brand-500/5 transition cursor-pointer">
+          <svg class="w-5 h-5 mx-auto text-brand-400 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+          </svg>
+          <div class="text-[11px] font-medium text-slate-300">Drop document or <span class="text-brand-400 underline">browse</span></div>
+          <input type="file" id="popup-file-input" class="hidden" accept=".pdf,.doc,.docx,.xls,.xlsx,.csv,.png,.jpg">
+        </div>
+
+        <div id="upload-status" class="hidden p-2 rounded-lg text-[11px] font-mono font-medium text-center"></div>
+      </div>
+
+      <!-- Recent Telemetry Stream -->
+      <div class="space-y-1.5">
+        <div class="flex items-center justify-between px-0.5">
+          <span class="font-semibold text-xs text-white">Recent Security Dossiers</span>
+          <button id="btn-refresh-docs" class="text-[10px] font-mono text-brand-400 hover:underline">Refresh</button>
+        </div>
+
+        <div id="recent-docs-list" class="space-y-1.5 max-h-[130px] overflow-y-auto pr-0.5">
+          <div class="text-center py-4 text-slate-500 text-xs font-mono">Loading telemetry...</div>
+        </div>
+      </div>
+
+      <!-- Quick Action Navigation Hub -->
+      <div class="space-y-2 pt-1">
+        <button id="btn-toggle-inpage" class="w-full py-2 px-3 text-xs font-semibold rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white flex items-center justify-center space-x-1.5 shadow-lg shadow-emerald-600/25 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <span>Open In-Page Shield on Current Webpage</span>
+        </button>
+
+        <div class="grid grid-cols-2 gap-2">
+          <button id="btn-open-university" class="py-1.5 px-2 text-[11px] font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center justify-center space-x-1 transition">
+            <span>🏛️ Univ Portal</span>
+          </button>
+          <button id="btn-open-dashboard" class="py-1.5 px-2 text-[11px] font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center justify-center space-x-1 transition">
+            <span>📊 Full Dashboard</span>
+          </button>
+        </div>
+
+        <button id="btn-open-sidepanel" class="w-full py-1.5 px-3 text-xs font-medium rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 flex items-center justify-center space-x-1.5 transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/>
+          </svg>
+          <span>Open Chrome Side Panel</span>
+        </button>
+      </div>
+
+    </main>
+
+  </div>
+</body>
+</html>

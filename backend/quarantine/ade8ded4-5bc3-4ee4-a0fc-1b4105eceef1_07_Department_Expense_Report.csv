@@ -1,0 +1,5 @@
+ExpenseID,Date,Department,Category,Description,Amount,ApprovedBy
+EXP-2026-01,2026-10-05,Computer Science,Hardware,GPU Cooling Modules,850.00,Dr. Vance
+EXP-2026-02,2026-10-12,Robotics Lab,Electronics,Sensor Arrays,420.00,Dr. Vance
+EXP-2026-03,2026-10-19,Dean Office,Conferences,NeurIPS 2026 Registration,1200.00,Dean Miller
+EXP-2026-04,2026-10-26,Bursar Office,Software,SSL Security Certificates,350.00,Director Smith

@@ -1,0 +1,42 @@
+@import '../styles/tailwind.css';
+
+/* Side Panel Layout Specifics */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #f8fafc;
+}
+
+#sidepanel-root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Custom transitions and scroll areas */
+.tab-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+/* Pipeline Step Line Connector */
+.pipeline-connector {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  bottom: -14px;
+  width: 2px;
+  background-color: #e2e8f0;
+  z-index: 0;
+}
+
+.pipeline-step-active .pipeline-connector {
+  background-color: #3b82f6;
+}
+
+.pipeline-step-completed .pipeline-connector {
+  background-color: #10b981;
+}

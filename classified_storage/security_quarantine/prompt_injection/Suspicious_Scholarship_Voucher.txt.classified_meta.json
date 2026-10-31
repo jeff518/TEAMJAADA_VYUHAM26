@@ -1,0 +1,31 @@
+{
+  "document_id": "924b749b-7fd1-47c0-87db-d1011bcf4f7a",
+  "original_filename": "Suspicious_Scholarship_Voucher.txt",
+  "classified_filename": "Suspicious_Scholarship_Voucher.txt",
+  "classification": {
+    "category": "SECURITY_THREAT",
+    "sub_category": "PROMPT_INJECTION",
+    "relative_path": "security_quarantine/prompt_injection/Suspicious_Scholarship_Voucher.txt",
+    "full_path": "A:/vy26/classified_storage/security_quarantine/prompt_injection/Suspicious_Scholarship_Voucher.txt"
+  },
+  "security_disposition": {
+    "final_decision": "BLOCK",
+    "door1_decision": "ALLOW",
+    "door2_decision": "BLOCK",
+    "risk_score": 50,
+    "clearance_token": "SECUREDOC-REJECT-THREAT"
+  },
+  "explainability": {
+    "verdict": "BLOCKED_BY_AI_GATEWAY",
+    "threat_name": "Adversarial AI Prompt Injection (CWE-1427)",
+    "threat_severity": "CRITICAL (Risk 100/100)",
+    "root_cause_analysis": "Door 2 Violation: Prompt injection trigger match: 'Ignore all previous instructions'",
+    "target_vector": "System Instruction Override / Exemption Clause",
+    "evidence_excerpt": "'Ignore all previous instructions'",
+    "action_taken": "Document quarantined, submission barred from destination server, audit log anchored."
+  },
+  "extracted_data": {},
+  "dte_validation": {},
+  "three_way_match": {},
+  "dispatched_at": "2026-10-30T19:57:58.597341Z"
+}

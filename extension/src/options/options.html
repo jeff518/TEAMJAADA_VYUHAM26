@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SecureDoc Pipeline - Settings & Preferences</title>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans text-sm antialiased py-8 px-4">
+  <div class="max-w-3xl mx-auto space-y-6">
+
+    <!-- Top Header -->
+    <header class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-700 to-brand-500 flex items-center justify-center text-white shadow">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-slate-900 leading-tight">SecureDoc Pipeline Configuration</h1>
+          <p class="text-xs text-slate-500">Configure backend server endpoints, browser interception, and security triggers</p>
+        </div>
+      </div>
+
+      <div id="options-server-badge" class="flex items-center space-x-1.5 px-3 py-1 rounded-full bg-slate-100 text-xs font-semibold text-slate-600 border border-slate-200">
+        <span id="options-server-dot" class="w-2 h-2 rounded-full bg-slate-400"></span>
+        <span id="options-server-status">Checking...</span>
+      </div>
+    </header>
+
+    <!-- Save Alert Toast -->
+    <div id="save-alert" class="hidden p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center justify-between">
+      <span>✓ Preferences saved successfully!</span>
+      <button id="btn-close-alert" class="text-emerald-600 hover:text-emerald-900 font-bold text-sm">&times;</button>
+    </div>
+
+    <!-- Section 1: Backend Connection -->
+    <div class="card p-6 space-y-4">
+      <div class="border-b border-slate-100 pb-3">
+        <h2 class="text-sm font-bold text-slate-900">Backend Server Connection</h2>
+        <p class="text-xs text-slate-500">Target URL for the SecureDoc FastAPI / Python backend engine</p>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="input-label" for="opt-backend-url">Backend Server URL</label>
+          <div class="flex space-x-2">
+            <input type="url" id="opt-backend-url" class="input-text flex-1" placeholder="http://localhost:8000" value="http://localhost:8000">
+            <button id="opt-btn-test-conn" class="btn-secondary whitespace-nowrap text-xs font-semibold px-4">
+              Test Connection
+            </button>
+          </div>
+          <p id="opt-test-feedback" class="text-xs mt-1.5 hidden"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Authentication -->
+    <div class="card p-6 space-y-4">
+      <div class="border-b border-slate-100 pb-3">
+        <h2 class="text-sm font-bold text-slate-900">Authentication & Session</h2>
+        <p class="text-xs text-slate-500">Manage user session and access tokens for pipeline API requests</p>
+      </div>
+
+      <div id="opt-auth-logged-in" class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="w-9 h-9 rounded-full bg-brand-100 text-brand-700 font-bold flex items-center justify-center text-sm" id="opt-user-initial">
+            A
+          </div>
+          <div>
+            <div id="opt-user-display-name" class="font-bold text-xs text-slate-900">Analyst User</div>
+            <div id="opt-user-email" class="text-[11px] text-slate-500">analyst@securedoc.internal</div>
+          </div>
+        </div>
+        <button id="opt-btn-logout" class="btn-secondary text-xs text-rose-600 hover:bg-rose-50 border-rose-200">
+          Sign Out
+        </button>
+      </div>
+
+      <div id="opt-auth-logged-out" class="hidden space-y-3">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="input-label" for="opt-login-email">Email</label>
+            <input type="email" id="opt-login-email" class="input-text" placeholder="analyst@securedoc.internal">
+          </div>
+          <div>
+            <label class="input-label" for="opt-login-password">Password</label>
+            <input type="password" id="opt-login-password" class="input-text" placeholder="••••••••">
+          </div>
+        </div>
+        <button id="opt-btn-login" class="btn-primary text-xs font-semibold">
+          Authenticate Session
+        </button>
+      </div>
+    </div>
+
+    <!-- Section 3: Browser Interception -->
+    <div class="card p-6 space-y-4">
+      <div class="border-b border-slate-100 pb-3">
+        <h2 class="text-sm font-bold text-slate-900">Browser Interception Preferences</h2>
+        <p class="text-xs text-slate-500">Configure how SecureDoc automatically detects documents across web pages</p>
+      </div>
+
+      <div class="space-y-4">
+        <label class="flex items-start space-x-3 cursor-pointer">
+          <input type="checkbox" id="opt-pref-downloads" class="rounded text-brand-600 focus:ring-brand-500 mt-1">
+          <div>
+            <div class="font-semibold text-xs text-slate-800">Intercept Browser Downloads</div>
+            <div class="text-xs text-slate-500">Automatically inspect document files (PDF, DOCX, XLSX, etc.) downloaded through Chrome</div>
+          </div>
+        </label>
+
+        <label class="flex items-start space-x-3 cursor-pointer">
+          <input type="checkbox" id="opt-pref-dragdrop" class="rounded text-brand-600 focus:ring-brand-500 mt-1">
+          <div>
+            <div class="font-semibold text-xs text-slate-800">Drag & Drop Intake Overlay</div>
+            <div class="text-xs text-slate-500">Display the full-window intake overlay when dragging documents into any browser tab</div>
+          </div>
+        </label>
+
+        <label class="flex items-start space-x-3 cursor-pointer">
+          <input type="checkbox" id="opt-pref-emails" class="rounded text-brand-600 focus:ring-brand-500 mt-1">
+          <div>
+            <div class="font-semibold text-xs text-slate-800">Email Attachment Badges</div>
+            <div class="text-xs text-slate-500">Add 1-click "Scan with SecureDoc" badges beside email attachments in Gmail, Outlook, and Yahoo</div>
+          </div>
+        </label>
+
+        <label class="flex items-start space-x-3 cursor-pointer">
+          <input type="checkbox" id="opt-pref-notifications" class="rounded text-brand-600 focus:ring-brand-500 mt-1">
+          <div>
+            <div class="font-semibold text-xs text-slate-800">Desktop System Notifications</div>
+            <div class="text-xs text-slate-500">Display Chrome desktop popups when pipeline checks complete or require approval</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Section 4: Data Management -->
+    <div class="card p-6 space-y-4">
+      <div class="border-b border-slate-100 pb-3">
+        <h2 class="text-sm font-bold text-slate-900">Local Data & Storage</h2>
+        <p class="text-xs text-slate-500">Manage extension local cache and storage</p>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <button id="opt-btn-clear-cache" class="btn-secondary text-xs text-slate-700">
+          Clear Local Cache
+        </button>
+        <button id="opt-btn-reset-defaults" class="btn-danger text-xs">
+          Reset to Factory Defaults
+        </button>
+      </div>
+    </div>
+
+    <!-- Save Button Container -->
+    <div class="flex justify-end space-x-3 pt-2">
+      <button id="opt-btn-save-all" class="btn-primary px-6 py-2.5 text-xs font-bold shadow-md">
+        Save All Changes
+      </button>
+    </div>
+
+    <!-- About Footer -->
+    <div class="text-center text-xs text-slate-400 py-4 space-y-1">
+      <p class="font-semibold text-slate-600">SecureDoc Pipeline Extension v1.0.0 (Manifest V3)</p>
+      <p>Zero-Trust Document Intake • Multi-Door Antivirus & Sandbox • AI Extraction • 3-Way Reconciliation</p>
+    </div>
+
+  </div>
+</body>
+</html>

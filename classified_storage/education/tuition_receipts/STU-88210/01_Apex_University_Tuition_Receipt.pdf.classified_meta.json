@@ -1,0 +1,392 @@
+{
+  "document_id": "58489907-7d4a-41b0-8053-a471323d955e",
+  "original_filename": "01_Apex_University_Tuition_Receipt.pdf",
+  "classified_filename": "01_Apex_University_Tuition_Receipt.pdf",
+  "classification": {
+    "category": "EDUCATION_FINANCE",
+    "sub_category": "TUITION_FEE_RECEIPT",
+    "relative_path": "education/tuition_receipts/STU-88210/01_Apex_University_Tuition_Receipt.pdf",
+    "full_path": "A:/vy26/classified_storage/education/tuition_receipts/STU-88210/01_Apex_University_Tuition_Receipt.pdf",
+    "workflow_code": "BURSAR_TUITION_SETTLEMENT",
+    "workflow_name": "Bursar Autonomous Tuition Settlement & Registration Clearance Workflow"
+  },
+  "workflow_escalation": {
+    "workflow_id": "WF-BURSAR-SETTLE-101",
+    "workflow_code": "BURSAR_TUITION_SETTLEMENT",
+    "workflow_name": "Bursar Autonomous Tuition Settlement & Registration Clearance Workflow",
+    "department": "Office of the Bursar / Student Financial Services",
+    "assigned_agent": "Bursar Ledger AI Reconciler (Agent #BR-04)",
+    "priority": "HIGH",
+    "status": "ESCALATED_AND_SETTLED",
+    "sla": "Instant Real-Time Clearance (< 1.2s)",
+    "action_summary": "Fall 2026 tuition balance reconciled; $4,850 dues zeroed; course registration holds lifted.",
+    "escalated_actions": [
+      "Tuition ledger account credited for Fall Semester 2026",
+      "Current term outstanding balance cleared to $0.00 (PAID IN FULL)",
+      "Registrar financial hold removed; full enrollment status confirmed",
+      "Cryptographic clearance token minted and verified against Bursar Gateway"
+    ],
+    "stages": [
+      {
+        "step": 1,
+        "name": "Academic Schedule & Credit Verification",
+        "status": "COMPLETED",
+        "detail": "16 Credits mapped to Jane Smith (STU-88210)"
+      },
+      {
+        "step": 2,
+        "name": "Deterministic Arithmetic & Grant Validation",
+        "status": "COMPLETED",
+        "detail": "15/15 rules passed ($3,250 Dean's Scholarship offset verified)"
+      },
+      {
+        "step": 3,
+        "name": "General Ledger Debit & Student Dues Offset",
+        "status": "COMPLETED",
+        "detail": "Tuition ledger credited; balance updated to $0.00"
+      },
+      {
+        "step": 4,
+        "name": "Registrar Hold Release & Enrollment Lock",
+        "status": "COMPLETED",
+        "detail": "Course registration unlocked for Spring 2027 prerequisites"
+      }
+    ]
+  },
+  "security_disposition": {
+    "final_decision": "ALLOW",
+    "door1_decision": "ALLOW",
+    "door2_decision": "ALLOW",
+    "risk_score": 15,
+    "clearance_token": "SECUREDOC-CLEAR-58489907-ALLOW"
+  },
+  "explainability": {
+    "verdict": "VERIFIED_AND_CLEARED",
+    "security_status": "Clean (0 Threats Detected)",
+    "door1_file_integrity": "Passed (Clean PDF structure, valid MIME, 0 embedded macro exploits)",
+    "door2_ai_security": "Passed (Zero adversarial prompt injections, semantic neutrality 99.8%)",
+    "vlm_multimodal_extraction": "Successfully extracted vendor 'Apex University of Technology', reference 'REC-2026-88210', total $4850.00",
+    "dte_mathematical_validation": "Arithmetic verified (Line Items Sum == Subtotal, Subtotal + Tax == Grand Total)",
+    "three_way_handshake_status": "Not required for student receipt",
+    "action_taken": "Cryptographic token attached, form auto-filled on host website, file dispatched to classified archive."
+  },
+  "extracted_data": {
+    "invoice_number": "REC-2026-88210",
+    "invoice_date": "2026-10-30",
+    "due_date": "2026-11-20",
+    "po_number": null,
+    "vendor_name": "Apex University of Technology",
+    "vendor_address": null,
+    "vendor_tax_id": null,
+    "customer_name": "Jane Smith (STU-88210)",
+    "customer_address": null,
+    "currency": "USD",
+    "subtotal": 4850.0,
+    "tax_rate": null,
+    "tax_amount": null,
+    "total_amount": 4850.0,
+    "payment_terms": "Fall Semester 2026\nTUITION & FEE BREAKDOWN",
+    "line_items": [
+      {
+        "description": "CS-401: Advanced Agentic AI Systems",
+        "quantity": 4.0,
+        "unit_price": 900.0,
+        "amount": 3600.0,
+        "item_code": "CS-401",
+        "category": "Tuition",
+        "tax_rate": null
+      },
+      {
+        "description": "CS-415: Distributed Systems & Security",
+        "quantity": 4.0,
+        "unit_price": 900.0,
+        "amount": 3600.0,
+        "item_code": "CS-415",
+        "category": "Tuition",
+        "tax_rate": null
+      },
+      {
+        "description": "GPU Cloud Computing Laboratory Access",
+        "quantity": 1.0,
+        "unit_price": 450.0,
+        "amount": 450.0,
+        "item_code": null,
+        "category": "Lab Fee",
+        "tax_rate": null
+      },
+      {
+        "description": "Campus Health, Wellness & Recreation",
+        "quantity": 1.0,
+        "unit_price": 300.0,
+        "amount": 300.0,
+        "item_code": null,
+        "category": "Amenities",
+        "tax_rate": null
+      },
+      {
+        "description": "University Library & Digital Journals Access",
+        "quantity": 1.0,
+        "unit_price": 150.0,
+        "amount": 150.0,
+        "item_code": null,
+        "category": "Academic Resources",
+        "tax_rate": null
+      },
+      {
+        "description": "Dean's Merit Scholarship (Autumn Credit)",
+        "quantity": 1.0,
+        "unit_price": 3250.0,
+        "amount": -3250.0,
+        "item_code": null,
+        "category": "Financial Aid",
+        "tax_rate": null
+      }
+    ],
+    "confidence_score": 0.85,
+    "raw_response": null
+  },
+  "dte_validation": {
+    "is_valid": true,
+    "total_checks": 15,
+    "passed_checks": 15,
+    "failed_checks": 0,
+    "checks": [
+      {
+        "rule_name": "required_field_check",
+        "passed": true,
+        "field": "vendor_name",
+        "expected": "non-null value",
+        "actual": "Apex University of Technology",
+        "message": "Field present",
+        "severity": "info"
+      },
+      {
+        "rule_name": "required_field_check",
+        "passed": true,
+        "field": "invoice_number",
+        "expected": "non-null value",
+        "actual": "REC-2026-88210",
+        "message": "Field present",
+        "severity": "info"
+      },
+      {
+        "rule_name": "required_field_check",
+        "passed": true,
+        "field": "invoice_date",
+        "expected": "non-null value",
+        "actual": "2026-10-30",
+        "message": "Field present",
+        "severity": "info"
+      },
+      {
+        "rule_name": "required_field_check",
+        "passed": true,
+        "field": "total_amount",
+        "expected": "non-null value",
+        "actual": "4850.0",
+        "message": "Field present",
+        "severity": "info"
+      },
+      {
+        "rule_name": "date_format_check",
+        "passed": true,
+        "field": "invoice_date",
+        "expected": "valid date format",
+        "actual": "2026-10-30",
+        "message": "Invoice date normalized successfully",
+        "severity": "info"
+      },
+      {
+        "rule_name": "date_chronology_check",
+        "passed": true,
+        "field": "due_date",
+        "expected": ">= 2026-10-30",
+        "actual": "2026-11-20",
+        "message": "Payment due date is after or on invoice date",
+        "severity": "info"
+      },
+      {
+        "rule_name": "line_item_math_check",
+        "passed": true,
+        "field": "line_items[0].amount",
+        "expected": 3600.0,
+        "actual": 3600.0,
+        "message": "Line item #1 math correct",
+        "severity": "info"
+      },
+      {
+        "rule_name": "line_item_math_check",
+        "passed": true,
+        "field": "line_items[1].amount",
+        "expected": 3600.0,
+        "actual": 3600.0,
+        "message": "Line item #2 math correct",
+        "severity": "info"
+      },
+      {
+        "rule_name": "line_item_math_check",
+        "passed": true,
+        "field": "line_items[2].amount",
+        "expected": 450.0,
+        "actual": 450.0,
+        "message": "Line item #3 math correct",
+        "severity": "info"
+      },
+      {
+        "rule_name": "line_item_math_check",
+        "passed": true,
+        "field": "line_items[3].amount",
+        "expected": 300.0,
+        "actual": 300.0,
+        "message": "Line item #4 math correct",
+        "severity": "info"
+      },
+      {
+        "rule_name": "line_item_math_check",
+        "passed": true,
+        "field": "line_items[4].amount",
+        "expected": 150.0,
+        "actual": 150.0,
+        "message": "Line item #5 math correct",
+        "severity": "info"
+      },
+      {
+        "rule_name": "line_item_math_check",
+        "passed": true,
+        "field": "line_items[5].amount",
+        "expected": -3250.0,
+        "actual": -3250.0,
+        "message": "Line item #6 math correct",
+        "severity": "info"
+      },
+      {
+        "rule_name": "subtotal_sum_check",
+        "passed": true,
+        "field": "subtotal",
+        "expected": 4850.0,
+        "actual": 4850.0,
+        "message": "Subtotal matches sum of line items",
+        "severity": "info"
+      },
+      {
+        "rule_name": "grand_total_arithmetic_check",
+        "passed": true,
+        "field": "total_amount",
+        "expected": 4850.0,
+        "actual": 4850.0,
+        "message": "Grand total calculation matches",
+        "severity": "info"
+      },
+      {
+        "rule_name": "currency_consistency_check",
+        "passed": true,
+        "field": "currency",
+        "expected": "Valid ISO currency code",
+        "actual": "USD",
+        "message": "Recognized currency",
+        "severity": "info"
+      }
+    ],
+    "normalized_data": {
+      "invoice_number": "REC-2026-88210",
+      "invoice_date": "2026-10-30",
+      "due_date": "2026-11-20",
+      "po_number": null,
+      "vendor_name": "Apex University of Technology",
+      "vendor_address": null,
+      "vendor_tax_id": null,
+      "customer_name": "Jane Smith (STU-88210)",
+      "customer_address": null,
+      "currency": "USD",
+      "subtotal": 4850.0,
+      "tax_rate": null,
+      "tax_amount": null,
+      "total_amount": 4850.0,
+      "payment_terms": "Fall Semester 2026\nTUITION & FEE BREAKDOWN",
+      "line_items": [
+        {
+          "description": "CS-401: Advanced Agentic AI Systems",
+          "quantity": 4.0,
+          "unit_price": 900.0,
+          "amount": 3600.0,
+          "item_code": "CS-401",
+          "category": "Tuition",
+          "tax_rate": null
+        },
+        {
+          "description": "CS-415: Distributed Systems & Security",
+          "quantity": 4.0,
+          "unit_price": 900.0,
+          "amount": 3600.0,
+          "item_code": "CS-415",
+          "category": "Tuition",
+          "tax_rate": null
+        },
+        {
+          "description": "GPU Cloud Computing Laboratory Access",
+          "quantity": 1.0,
+          "unit_price": 450.0,
+          "amount": 450.0,
+          "item_code": null,
+          "category": "Lab Fee",
+          "tax_rate": null
+        },
+        {
+          "description": "Campus Health, Wellness & Recreation",
+          "quantity": 1.0,
+          "unit_price": 300.0,
+          "amount": 300.0,
+          "item_code": null,
+          "category": "Amenities",
+          "tax_rate": null
+        },
+        {
+          "description": "University Library & Digital Journals Access",
+          "quantity": 1.0,
+          "unit_price": 150.0,
+          "amount": 150.0,
+          "item_code": null,
+          "category": "Academic Resources",
+          "tax_rate": null
+        },
+        {
+          "description": "Dean's Merit Scholarship (Autumn Credit)",
+          "quantity": 1.0,
+          "unit_price": 3250.0,
+          "amount": -3250.0,
+          "item_code": null,
+          "category": "Financial Aid",
+          "tax_rate": null
+        }
+      ],
+      "confidence_score": 0.85,
+      "raw_response": null
+    }
+  },
+  "three_way_match": {
+    "document_id": "58489907-7d4a-41b0-8053-a471323d955e",
+    "po_number": null,
+    "receipt_number": null,
+    "status": "not_matched",
+    "overall_score": 0.0,
+    "vendor_score": 0.0,
+    "po_match_score": 0.0,
+    "amount_score": 0.0,
+    "items_score": 0.0,
+    "discrepancies": [
+      {
+        "field": "po_number",
+        "invoice_val": "",
+        "po_val": null,
+        "receipt_val": null,
+        "discrepancy_type": "po_not_found",
+        "severity": "critical",
+        "message": "No Purchase Order referenced on invoice."
+      }
+    ],
+    "details": {
+      "reason": "Purchase order does not exist in database"
+    }
+  },
+  "dispatched_at": "2026-10-30T22:22:54.986865Z"
+}

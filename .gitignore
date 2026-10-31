@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+extension/node_modules/
+
+# Environment variables
+.env
+.env.*
+
+# Build files
+dist/
+build/
+
+# Python
+__pycache__/
+venv/
+.venv/
+
+# Logs
+*.log

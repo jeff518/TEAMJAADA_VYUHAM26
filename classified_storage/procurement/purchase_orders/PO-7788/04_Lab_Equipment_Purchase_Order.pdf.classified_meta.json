@@ -1,0 +1,202 @@
+{
+  "document_id": "f093de2d-2b79-4a3c-b5c4-834f90b7943f",
+  "original_filename": "04_Lab_Equipment_Purchase_Order.pdf",
+  "classified_filename": "04_Lab_Equipment_Purchase_Order.pdf",
+  "classification": {
+    "category": "PROCUREMENT_LOGISTICS",
+    "sub_category": "LAB_RESEARCH_SUPPLIES",
+    "relative_path": "procurement/purchase_orders/PO-7788/04_Lab_Equipment_Purchase_Order.pdf",
+    "full_path": "A:/vy26/classified_storage/procurement/purchase_orders/PO-7788/04_Lab_Equipment_Purchase_Order.pdf"
+  },
+  "security_disposition": {
+    "final_decision": "ALLOW",
+    "door1_decision": "ALLOW",
+    "door2_decision": "ALLOW",
+    "risk_score": 30,
+    "clearance_token": "SECUREDOC-CLEAR-f093de2d-ALLOW"
+  },
+  "explainability": {
+    "verdict": "VERIFIED_AND_CLEARED",
+    "security_status": "Clean (0 Threats Detected)",
+    "door1_file_integrity": "Passed (Clean PDF structure, valid MIME, 0 embedded macro exploits)",
+    "door2_ai_security": "Passed (Zero adversarial prompt injections, semantic neutrality 99.8%)",
+    "vlm_multimodal_extraction": "Successfully extracted vendor 'Acme Industrial Supplies Inc.', reference 'PO-7788', total $1500.00",
+    "dte_mathematical_validation": "Arithmetic verified (Line Items Sum == Subtotal, Subtotal + Tax == Grand Total)",
+    "three_way_handshake_status": "100% Reconciled (PO == Goods Receipt == Invoiced Claim)",
+    "action_taken": "Cryptographic token attached, form auto-filled on host website, file dispatched to classified archive."
+  },
+  "extracted_data": {
+    "invoice_number": null,
+    "invoice_date": "2026-10-30",
+    "due_date": "2026-11-30",
+    "po_number": "PO-7788",
+    "vendor_name": "Acme Industrial Supplies Inc.",
+    "vendor_address": null,
+    "vendor_tax_id": null,
+    "customer_name": null,
+    "customer_address": null,
+    "currency": "USD",
+    "subtotal": 1500.0,
+    "tax_rate": null,
+    "tax_amount": null,
+    "total_amount": 1500.0,
+    "payment_terms": "s",
+    "line_items": [
+      {
+        "description": "Industrial Widgets",
+        "quantity": 10.0,
+        "unit_price": 150.0,
+        "amount": 1500.0,
+        "item_code": null,
+        "tax_rate": null
+      }
+    ],
+    "confidence_score": 0.85,
+    "raw_response": null
+  },
+  "dte_validation": {
+    "is_valid": false,
+    "total_checks": 10,
+    "passed_checks": 9,
+    "failed_checks": 1,
+    "checks": [
+      {
+        "rule_name": "required_field_check",
+        "passed": true,
+        "field": "vendor_name",
+        "expected": "non-null value",
+        "actual": "Acme Industrial Supplies Inc.",
+        "message": "Field present",
+        "severity": "info"
+      },
+      {
+        "rule_name": "required_field_check",
+        "passed": false,
+        "field": "invoice_number",
+        "expected": "non-null value",
+        "actual": null,
+        "message": "Field 'invoice_number' must be present and non-empty.",
+        "severity": "error"
+      },
+      {
+        "rule_name": "required_field_check",
+        "passed": true,
+        "field": "invoice_date",
+        "expected": "non-null value",
+        "actual": "2026-10-30",
+        "message": "Field present",
+        "severity": "info"
+      },
+      {
+        "rule_name": "required_field_check",
+        "passed": true,
+        "field": "total_amount",
+        "expected": "non-null value",
+        "actual": "1500.0",
+        "message": "Field present",
+        "severity": "info"
+      },
+      {
+        "rule_name": "date_format_check",
+        "passed": true,
+        "field": "invoice_date",
+        "expected": "valid date format",
+        "actual": "2026-10-30",
+        "message": "Invoice date normalized successfully",
+        "severity": "info"
+      },
+      {
+        "rule_name": "date_chronology_check",
+        "passed": true,
+        "field": "due_date",
+        "expected": ">= 2026-10-30",
+        "actual": "2026-11-30",
+        "message": "Payment due date is after or on invoice date",
+        "severity": "info"
+      },
+      {
+        "rule_name": "line_item_math_check",
+        "passed": true,
+        "field": "line_items[0].amount",
+        "expected": 1500.0,
+        "actual": 1500.0,
+        "message": "Line item #1 math correct",
+        "severity": "info"
+      },
+      {
+        "rule_name": "subtotal_sum_check",
+        "passed": true,
+        "field": "subtotal",
+        "expected": 1500.0,
+        "actual": 1500.0,
+        "message": "Subtotal matches sum of line items",
+        "severity": "info"
+      },
+      {
+        "rule_name": "grand_total_arithmetic_check",
+        "passed": true,
+        "field": "total_amount",
+        "expected": 1500.0,
+        "actual": 1500.0,
+        "message": "Grand total calculation matches",
+        "severity": "info"
+      },
+      {
+        "rule_name": "currency_consistency_check",
+        "passed": true,
+        "field": "currency",
+        "expected": "Valid ISO currency code",
+        "actual": "USD",
+        "message": "Recognized currency",
+        "severity": "info"
+      }
+    ],
+    "normalized_data": {
+      "invoice_number": null,
+      "invoice_date": "2026-10-30",
+      "due_date": "2026-11-30",
+      "po_number": "PO-7788",
+      "vendor_name": "Acme Industrial Supplies Inc.",
+      "vendor_address": null,
+      "vendor_tax_id": null,
+      "customer_name": null,
+      "customer_address": null,
+      "currency": "USD",
+      "subtotal": 1500.0,
+      "tax_rate": null,
+      "tax_amount": null,
+      "total_amount": 1500.0,
+      "payment_terms": "s",
+      "line_items": [
+        {
+          "description": "Industrial Widgets",
+          "quantity": 10.0,
+          "unit_price": 150.0,
+          "amount": 1500.0,
+          "item_code": null,
+          "tax_rate": null
+        }
+      ],
+      "confidence_score": 0.85,
+      "raw_response": null
+    }
+  },
+  "three_way_match": {
+    "document_id": "f093de2d-2b79-4a3c-b5c4-834f90b7943f",
+    "po_number": "PO-7788",
+    "receipt_number": "GRN-2026-7788",
+    "status": "matched",
+    "overall_score": 100.0,
+    "vendor_score": 100.0,
+    "po_match_score": 100.0,
+    "amount_score": 100.0,
+    "items_score": 100.0,
+    "discrepancies": [],
+    "details": {
+      "po_id": "e9e5f7f0-8b59-4a17-9dc2-5dc66dba943f",
+      "receipt_id": "ec7ccbf9-37e3-49e1-be9c-66243aadfbff",
+      "po_amount": 1500.0
+    }
+  },
+  "dispatched_at": "2026-10-30T19:25:02.428550Z"
+}

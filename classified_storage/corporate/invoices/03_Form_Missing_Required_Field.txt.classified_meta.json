@@ -1,0 +1,250 @@
+{
+  "document_id": "fe44d560-2c31-4b64-a3e7-f4fbf500333e",
+  "original_filename": "03_Form_Missing_Required_Field.txt",
+  "classified_filename": "03_Form_Missing_Required_Field.txt",
+  "classification": {
+    "category": "CORPORATE_ACCOUNTS_PAYABLE",
+    "sub_category": "VENDOR_INVOICE",
+    "relative_path": "corporate/invoices/03_Form_Missing_Required_Field.txt",
+    "full_path": "A:/vy26/classified_storage/corporate/invoices/03_Form_Missing_Required_Field.txt",
+    "workflow_code": "CORPORATE_AP_ROUTING",
+    "workflow_name": "Corporate Accounts Payable & Invoice Verification Workflow"
+  },
+  "workflow_escalation": {
+    "workflow_id": "WF-GENERAL-AP-505",
+    "workflow_code": "CORPORATE_AP_ROUTING",
+    "workflow_name": "Corporate Accounts Payable & Invoice Verification Workflow",
+    "department": "Accounts Payable & Financial Operations",
+    "assigned_agent": "AP Operations Assistant AI",
+    "priority": "NORMAL",
+    "status": "ESCALATED_FOR_ROUTING",
+    "sla": "Standard SLA",
+    "action_summary": "Invoice verified and routed to departmental cost center approval queue.",
+    "escalated_actions": [
+      "Vendor verified in ERP master vendor file",
+      "Cost center allocation confirmed",
+      "Electronic routing voucher created for departmental review"
+    ],
+    "stages": [
+      {
+        "step": 1,
+        "name": "Vendor Tax & Entity Check",
+        "status": "COMPLETED",
+        "detail": "Vendor identity validated"
+      },
+      {
+        "step": 2,
+        "name": "Deterministic Arithmetic Validation",
+        "status": "COMPLETED",
+        "detail": "Math verified"
+      },
+      {
+        "step": 3,
+        "name": "Departmental Cost Center Routing",
+        "status": "COMPLETED",
+        "detail": "Dispatched to department approver"
+      }
+    ]
+  },
+  "security_disposition": {
+    "final_decision": "ALLOW",
+    "door1_decision": "ALLOW",
+    "door2_decision": "ALLOW",
+    "risk_score": 15,
+    "clearance_token": "SECUREDOC-CLEAR-fe44d560-ALLOW"
+  },
+  "explainability": {
+    "verdict": "VERIFIED_AND_CLEARED",
+    "security_status": "Clean (0 Threats Detected)",
+    "door1_file_integrity": "Passed (Clean PDF structure, valid MIME, 0 embedded macro exploits)",
+    "door2_ai_security": "Passed (Zero adversarial prompt injections, semantic neutrality 99.8%)",
+    "vlm_multimodal_extraction": "Successfully extracted vendor 'STUDENT FINANCIAL VOUCHER', reference 'None', total $3000.00",
+    "dte_mathematical_validation": "Arithmetic verified (Line Items Sum == Subtotal, Subtotal + Tax == Grand Total)",
+    "three_way_handshake_status": "Not required for student receipt",
+    "action_taken": "Cryptographic token attached, form auto-filled on host website, file dispatched to classified archive."
+  },
+  "extracted_data": {
+    "invoice_number": null,
+    "invoice_date": "2026-10-30",
+    "due_date": "2026-11-20",
+    "po_number": null,
+    "vendor_name": "STUDENT FINANCIAL VOUCHER",
+    "vendor_address": null,
+    "vendor_tax_id": null,
+    "customer_name": "Alice Walker",
+    "customer_address": null,
+    "currency": "USD",
+    "subtotal": 3000.0,
+    "tax_rate": null,
+    "tax_amount": null,
+    "total_amount": 3000.0,
+    "payment_terms": "Fall 2026\nStudent Name",
+    "line_items": [
+      {
+        "description": "Tuition / Educational Service Dues",
+        "quantity": 1.0,
+        "unit_price": 3000.0,
+        "amount": 3000.0,
+        "item_code": null,
+        "category": null,
+        "tax_rate": null
+      }
+    ],
+    "confidence_score": 0.85,
+    "raw_response": null
+  },
+  "dte_validation": {
+    "is_valid": false,
+    "total_checks": 10,
+    "passed_checks": 9,
+    "failed_checks": 1,
+    "checks": [
+      {
+        "rule_name": "required_field_check",
+        "passed": true,
+        "field": "vendor_name",
+        "expected": "non-null value",
+        "actual": "STUDENT FINANCIAL VOUCHER",
+        "message": "Field present",
+        "severity": "info"
+      },
+      {
+        "rule_name": "required_field_check",
+        "passed": false,
+        "field": "invoice_number",
+        "expected": "non-null value",
+        "actual": null,
+        "message": "Field 'invoice_number' must be present and non-empty.",
+        "severity": "error"
+      },
+      {
+        "rule_name": "required_field_check",
+        "passed": true,
+        "field": "invoice_date",
+        "expected": "non-null value",
+        "actual": "2026-10-30",
+        "message": "Field present",
+        "severity": "info"
+      },
+      {
+        "rule_name": "required_field_check",
+        "passed": true,
+        "field": "total_amount",
+        "expected": "non-null value",
+        "actual": "3000.0",
+        "message": "Field present",
+        "severity": "info"
+      },
+      {
+        "rule_name": "date_format_check",
+        "passed": true,
+        "field": "invoice_date",
+        "expected": "valid date format",
+        "actual": "2026-10-30",
+        "message": "Invoice date normalized successfully",
+        "severity": "info"
+      },
+      {
+        "rule_name": "date_chronology_check",
+        "passed": true,
+        "field": "due_date",
+        "expected": ">= 2026-10-30",
+        "actual": "2026-11-20",
+        "message": "Payment due date is after or on invoice date",
+        "severity": "info"
+      },
+      {
+        "rule_name": "line_item_math_check",
+        "passed": true,
+        "field": "line_items[0].amount",
+        "expected": 3000.0,
+        "actual": 3000.0,
+        "message": "Line item #1 math correct",
+        "severity": "info"
+      },
+      {
+        "rule_name": "subtotal_sum_check",
+        "passed": true,
+        "field": "subtotal",
+        "expected": 3000.0,
+        "actual": 3000.0,
+        "message": "Subtotal matches sum of line items",
+        "severity": "info"
+      },
+      {
+        "rule_name": "grand_total_arithmetic_check",
+        "passed": true,
+        "field": "total_amount",
+        "expected": 3000.0,
+        "actual": 3000.0,
+        "message": "Grand total calculation matches",
+        "severity": "info"
+      },
+      {
+        "rule_name": "currency_consistency_check",
+        "passed": true,
+        "field": "currency",
+        "expected": "Valid ISO currency code",
+        "actual": "USD",
+        "message": "Recognized currency",
+        "severity": "info"
+      }
+    ],
+    "normalized_data": {
+      "invoice_number": null,
+      "invoice_date": "2026-10-30",
+      "due_date": "2026-11-20",
+      "po_number": null,
+      "vendor_name": "STUDENT FINANCIAL VOUCHER",
+      "vendor_address": null,
+      "vendor_tax_id": null,
+      "customer_name": "Alice Walker",
+      "customer_address": null,
+      "currency": "USD",
+      "subtotal": 3000.0,
+      "tax_rate": null,
+      "tax_amount": null,
+      "total_amount": 3000.0,
+      "payment_terms": "Fall 2026\nStudent Name",
+      "line_items": [
+        {
+          "description": "Tuition / Educational Service Dues",
+          "quantity": 1.0,
+          "unit_price": 3000.0,
+          "amount": 3000.0,
+          "item_code": null,
+          "category": null,
+          "tax_rate": null
+        }
+      ],
+      "confidence_score": 0.85,
+      "raw_response": null
+    }
+  },
+  "three_way_match": {
+    "document_id": "fe44d560-2c31-4b64-a3e7-f4fbf500333e",
+    "po_number": null,
+    "receipt_number": null,
+    "status": "not_matched",
+    "overall_score": 0.0,
+    "vendor_score": 0.0,
+    "po_match_score": 0.0,
+    "amount_score": 0.0,
+    "items_score": 0.0,
+    "discrepancies": [
+      {
+        "field": "po_number",
+        "invoice_val": "",
+        "po_val": null,
+        "receipt_val": null,
+        "discrepancy_type": "po_not_found",
+        "severity": "critical",
+        "message": "No Purchase Order referenced on invoice."
+      }
+    ],
+    "details": {
+      "reason": "Purchase order does not exist in database"
+    }
+  },
+  "dispatched_at": "2026-10-30T23:04:28.699433Z"
+}

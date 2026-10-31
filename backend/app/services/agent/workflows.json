@@ -1,0 +1,188 @@
+{
+  "version": "1.0",
+  "name": "DocuPilot AI Autonomous Workflow Configuration",
+  "min_confidence_threshold": 0.80,
+  "default_queue": "human_review_queue",
+  "workflows": {
+    "tuition_receipt": {
+      "department": "Office of the Bursar / Student Accounts",
+      "routing_code": "WF-BURSAR-SETTLE",
+      "rules": [
+        {
+          "condition": "security_failed",
+          "decision": "blocked",
+          "reason": "Security Gate violation: document quarantined due to threat vector or binary risk.",
+          "next_action": "Quarantine document and alert Cyber SOC"
+        },
+        {
+          "condition": "high_severity_inconsistency",
+          "decision": "escalate",
+          "reason": "High-severity financial inconsistency or duplicate ID conflict detected.",
+          "next_action": "Route to Bursar Senior Auditor for compliance investigation"
+        },
+        {
+          "condition": "has_validation_failures",
+          "decision": "escalate",
+          "reason": "Mandatory tuition validation rule or arithmetic check failed.",
+          "next_action": "Hold student ledger posting and notify Bursar review desk"
+        },
+        {
+          "condition": "low_confidence",
+          "decision": "needs_review",
+          "reason": "AI extraction confidence is below minimum automated settlement threshold (80%).",
+          "next_action": "Assign to Student Financial Services verification queue"
+        },
+        {
+          "condition": "has_validation_warnings",
+          "decision": "needs_review",
+          "reason": "Validation warnings present (e.g. non-standard date format).",
+          "next_action": "Queue for routine clerk review"
+        },
+        {
+          "condition": "all_checks_passed",
+          "decision": "auto_approved",
+          "reason": "All security gates, deterministic validations, and arithmetic rules passed with 0 inconsistencies.",
+          "next_action": "Post student tuition ledger credit, lift enrollment hold, and mint clearance token"
+        }
+      ]
+    },
+    "invoice": {
+      "department": "Accounts Payable / Procurement Logistics",
+      "routing_code": "WF-AP-INVOICE",
+      "rules": [
+        {
+          "condition": "security_failed",
+          "decision": "blocked",
+          "reason": "Security Gate violation: invoice quarantined.",
+          "next_action": "Quarantine document and trigger security incident response"
+        },
+        {
+          "condition": "high_severity_inconsistency",
+          "decision": "escalate",
+          "reason": "Critical arithmetic mismatch or cross-vendor tax ID inconsistency.",
+          "next_action": "Escalate to AP Manager and freeze vendor disbursement"
+        },
+        {
+          "condition": "has_validation_failures",
+          "decision": "escalate",
+          "reason": "Required fields missing or line items sum does not equal subtotal.",
+          "next_action": "Flag for AP exception resolution queue"
+        },
+        {
+          "condition": "low_confidence",
+          "decision": "needs_review",
+          "reason": "Field extraction confidence is below threshold (< 80%).",
+          "next_action": "Assign to Accounts Payable manual data review"
+        },
+        {
+          "condition": "has_validation_warnings",
+          "decision": "needs_review",
+          "reason": "Validation warning noted on non-critical attribute.",
+          "next_action": "Queue for secondary reviewer sign-off"
+        },
+        {
+          "condition": "all_checks_passed",
+          "decision": "auto_approved",
+          "reason": "Vendor invoice verified mathematically with 100% rule conformity.",
+          "next_action": "Schedule automated ACH disbursement batch in ERP ledger"
+        }
+      ]
+    },
+    "purchase_order": {
+      "department": "University Procurement & Logistics",
+      "routing_code": "WF-PO-DISPATCH",
+      "rules": [
+        {
+          "condition": "security_failed",
+          "decision": "blocked",
+          "reason": "Security Gate violation.",
+          "next_action": "Quarantine document"
+        },
+        {
+          "condition": "high_severity_inconsistency",
+          "decision": "escalate",
+          "reason": "PO budget or SKU specification inconsistency.",
+          "next_action": "Escalate to Procurement Director"
+        },
+        {
+          "condition": "all_checks_passed",
+          "decision": "auto_approved",
+          "reason": "PO specifications match authorization budget.",
+          "next_action": "Issue vendor purchase contract and notify warehouse depot"
+        }
+      ]
+    },
+    "expense_report": {
+      "department": "Finance & Accounting / Travel & Expenses",
+      "routing_code": "WF-EXPENSE-SETTLE",
+      "rules": [
+        {
+          "condition": "security_failed",
+          "decision": "blocked",
+          "reason": "Security Gate violation: expense report quarantined.",
+          "next_action": "Quarantine document and notify InfoSec"
+        },
+        {
+          "condition": "high_severity_inconsistency",
+          "decision": "escalate",
+          "reason": "Expense audit discrepancy or duplicate expense ID.",
+          "next_action": "Escalate to Finance Comptroller"
+        },
+        {
+          "condition": "has_validation_failures",
+          "decision": "escalate",
+          "reason": "Expense validation or line items reconciliation failed.",
+          "next_action": "Flag for Department Expense Audit"
+        },
+        {
+          "condition": "low_confidence",
+          "decision": "needs_review",
+          "reason": "Extraction confidence below threshold.",
+          "next_action": "Route to manual expense clerk"
+        },
+        {
+          "condition": "all_checks_passed",
+          "decision": "auto_approved",
+          "reason": "All expense items reconciled and approved within department budget.",
+          "next_action": "Disburse department reimbursement and log journal entry"
+        }
+      ]
+    },
+    "default": {
+      "department": "General Document Operations / Central Records",
+      "routing_code": "WF-GENERAL-ROUTING",
+      "rules": [
+        {
+          "condition": "security_failed",
+          "decision": "blocked",
+          "reason": "Security gate failure.",
+          "next_action": "Quarantine document"
+        },
+        {
+          "condition": "high_severity_inconsistency",
+          "decision": "escalate",
+          "reason": "High-severity anomaly detected.",
+          "next_action": "Escalate to department supervisor"
+        },
+        {
+          "condition": "has_validation_failures",
+          "decision": "needs_review",
+          "reason": "Validation failures detected.",
+          "next_action": "Assign to human verification queue"
+        },
+        {
+          "condition": "low_confidence",
+          "decision": "needs_review",
+          "reason": "Confidence score below required threshold.",
+          "next_action": "Queue for manual operator inspection"
+        },
+        {
+          "condition": "all_checks_passed",
+          "decision": "auto_approved",
+          "reason": "All checks validated cleanly.",
+          "next_action": "Archive into classified repository"
+        }
+      ]
+    }
+  }
+}

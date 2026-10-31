@@ -1,0 +1,145 @@
+{
+  "test-1": {
+    "doc_id": "test-1",
+    "filename": "invoice.pdf",
+    "file_type": "pdf",
+    "size": 1024,
+    "upload_time": "2026-10-30T22:30:29.929219+00:00",
+    "security_status": "passed",
+    "index_status": "indexed",
+    "indexed_at": "2026-10-30T22:30:29.929249+00:00",
+    "metadata": {}
+  },
+  "doc-01-clean": {
+    "doc_id": "doc-01-clean",
+    "filename": "01_Clean_Invoice.txt",
+    "file_type": "txt",
+    "size": 577,
+    "upload_time": "2026-10-30T22:50:38.052261+00:00",
+    "security_status": "passed",
+    "index_status": "indexed",
+    "indexed_at": "2026-10-30T22:50:40.129697+00:00",
+    "metadata": {}
+  },
+  "doc-02-wrong-total": {
+    "doc_id": "doc-02-wrong-total",
+    "filename": "02_Invoice_Wrong_Total.txt",
+    "file_type": "txt",
+    "size": 528,
+    "upload_time": "2026-10-30T22:50:40.138745+00:00",
+    "security_status": "passed",
+    "index_status": "indexed",
+    "indexed_at": "2026-10-30T22:50:42.179176+00:00",
+    "metadata": {}
+  },
+  "doc-03-missing-field": {
+    "doc_id": "doc-03-missing-field",
+    "filename": "03_Form_Missing_Required_Field.txt",
+    "file_type": "txt",
+    "size": 293,
+    "upload_time": "2026-10-30T22:50:42.193940+00:00",
+    "security_status": "passed",
+    "index_status": "indexed",
+    "indexed_at": "2026-10-30T22:50:44.256729+00:00",
+    "metadata": {}
+  },
+  "doc-04a-batch": {
+    "doc_id": "doc-04a-batch",
+    "filename": "04A_Batch_Student_Record.txt",
+    "file_type": "txt",
+    "size": 251,
+    "upload_time": "2026-10-30T22:50:44.272635+00:00",
+    "security_status": "passed",
+    "index_status": "indexed",
+    "indexed_at": "2026-10-30T22:50:46.314908+00:00",
+    "metadata": {}
+  },
+  "doc-04b-batch-conflict": {
+    "doc_id": "doc-04b-batch-conflict",
+    "filename": "04B_Batch_Conflicting_Student_Record.txt",
+    "file_type": "txt",
+    "size": 255,
+    "upload_time": "2026-10-30T22:50:46.332832+00:00",
+    "security_status": "passed",
+    "index_status": "indexed",
+    "indexed_at": "2026-10-30T22:50:48.382721+00:00",
+    "metadata": {}
+  },
+  "doc-06-csv": {
+    "doc_id": "doc-06-csv",
+    "filename": "07_Department_Expense_Report.csv",
+    "file_type": "csv",
+    "size": 422,
+    "upload_time": "2026-10-30T22:50:48.396739+00:00",
+    "security_status": "passed",
+    "index_status": "indexed",
+    "indexed_at": "2026-10-30T22:50:50.457766+00:00",
+    "metadata": {}
+  },
+  "doc-07-security-threat": {
+    "doc_id": "doc-07-security-threat",
+    "filename": "07_Security_Failure_Prompt_Injection.txt",
+    "file_type": "txt",
+    "size": 383,
+    "upload_time": "2026-10-30T22:50:50.530964+00:00",
+    "security_status": "blocked",
+    "index_status": "quarantined",
+    "indexed_at": "2026-10-30T22:50:52.572090+00:00",
+    "metadata": {}
+  },
+  "test-clean-1": {
+    "doc_id": "test-clean-1",
+    "filename": "01_Clean_Invoice.txt",
+    "file_type": "txt",
+    "size": 577,
+    "upload_time": "2026-10-30T22:43:20.976972+00:00",
+    "security_status": "passed",
+    "index_status": "indexed",
+    "indexed_at": "2026-10-30T22:43:23.056152+00:00",
+    "metadata": {}
+  },
+  "debug-1": {
+    "doc_id": "debug-1",
+    "filename": "01_Clean_Invoice.txt",
+    "file_type": "txt",
+    "size": 577,
+    "upload_time": "2026-10-30T22:43:47.290675+00:00",
+    "security_status": "passed",
+    "index_status": "indexed",
+    "indexed_at": "2026-10-30T22:43:49.373249+00:00",
+    "metadata": {}
+  },
+  "debug-2": {
+    "doc_id": "debug-2",
+    "filename": "01_Clean_Invoice.txt",
+    "file_type": "txt",
+    "size": 577,
+    "upload_time": "2026-10-30T22:44:29.945265+00:00",
+    "security_status": "passed",
+    "index_status": "indexed",
+    "indexed_at": "2026-10-30T22:44:32.050638+00:00",
+    "metadata": {}
+  },
+  "c35b8248-f343-4838-9cdb-197e0b869ec3": {
+    "doc_id": "c35b8248-f343-4838-9cdb-197e0b869ec3",
+    "filename": "01_Clean_Invoice.txt",
+    "file_type": "txt",
+    "size": 577,
+    "upload_time": "2026-10-30T23:02:48.029239",
+    "security_status": "passed",
+    "index_status": "indexed",
+    "indexed_at": "2026-10-30T23:04:12.163288+00:00",
+    "metadata": {}
+  },
+  "fe44d560-2c31-4b64-a3e7-f4fbf500333e": {
+    "doc_id": "fe44d560-2c31-4b64-a3e7-f4fbf500333e",
+    "filename": "03_Form_Missing_Required_Field.txt",
+    "file_type": "txt",
+    "size": 293,
+    "upload_time": "2026-10-30T23:04:24.627802",
+    "security_status": "passed",
+    "index_status": "indexed",
+    "indexed_at": "2026-10-30T23:04:28.713685+00:00",
+    "metadata": {}
+  }
+}

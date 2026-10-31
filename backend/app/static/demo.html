@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DocuPilot AI — Intelligent Document Processing Platform (Vyuham)</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #111827;
+      --card-border: #1f2937;
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --text: #f3f4f6;
+      --text-muted: #94a3b8;
+      --success: #10b981;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+      --purple: #a855f7;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+    header {
+      background: #0f172a;
+      border-bottom: 1px solid var(--card-border);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-logo {
+      width: 38px; height: 38px; border-radius: 8px;
+      background: linear-gradient(135deg, #0284c7, #6366f1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; font-weight: bold; color: white;
+      box-shadow: 0 0 15px rgba(2, 132, 199, 0.4);
+    }
+    .brand h1 { font-size: 18px; font-weight: 700; color: #ffffff; letter-spacing: -0.3px; }
+    .brand p { font-size: 12px; color: var(--text-muted); }
+
+    .header-actions { display: flex; align-items: center; gap: 12px; }
+    .live-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(16, 185, 129, 0.15); color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;
+    }
+    .pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
+
+    .btn-secondary {
+      background: #1e293b; color: #cbd5e1; border: 1px solid #334155;
+      padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-secondary:hover { background: #334155; color: white; }
+
+    main { flex: 1; max-width: 1400px; width: 100%; margin: 24px auto; padding: 0 24px; display: flex; flex-direction: column; gap: 24px; }
+
+    /* Summary Counters */
+    .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+    .summary-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 12px; padding: 18px 20px;
+      display: flex; flex-direction: column; gap: 6px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2);
+    }
+    .summary-card .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 600; }
+    .summary-card .value { font-size: 24px; font-weight: 800; color: #ffffff; }
+
+    /* Empty State */
+    .empty-state {
+      background: var(--card-bg); border: 2px dashed #334155;
+      border-radius: 16px; padding: 64px 32px; text-align: center;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      margin: 32px 0;
+    }
+    .empty-icon { font-size: 54px; margin-bottom: 16px; opacity: 0.8; }
+    .empty-title { font-size: 20px; font-weight: 700; color: #ffffff; margin-bottom: 8px; }
+    .empty-desc { max-width: 540px; font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px; }
+    .empty-instruction {
+      background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 8px; padding: 12px 20px; font-size: 12px; color: #bae6fd;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+
+    /* Content Layout */
+    .dashboard-layout { display: grid; grid-template-columns: 1fr; gap: 24px; }
+
+    /* Card Panels */
+    .panel {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 12px; padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .panel-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px;
+    }
+    .panel-title { font-size: 15px; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px; }
+
+    /* Documents Table */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 12px; }
+    th { background: #0b1329; color: var(--text-muted); font-weight: 600; padding: 12px 14px; text-transform: uppercase; font-size: 10px; letter-spacing: 0.5px; border-bottom: 1px solid #1e293b; }
+    td { padding: 12px 14px; border-bottom: 1px solid #1e293b; color: #cbd5e1; }
+    tr:hover td { background: rgba(56, 189, 248, 0.03); cursor: pointer; }
+    tr.selected td { background: rgba(56, 189, 248, 0.08); border-left: 3px solid var(--primary); }
+
+    /* Badges */
+    .pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+    .pill-pass { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .pill-warn { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+    .pill-fail, .pill-block { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+    .pill-auto { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+    .pill-escalate { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
+
+    /* Live Pipeline Timeline */
+    .timeline {
+      display: flex; align-items: center; justify-content: space-between;
+      position: relative; margin: 24px 0 32px 0; padding: 0 16px;
+    }
+    .timeline::before {
+      content: ''; position: absolute; top: 18px; left: 32px; right: 32px;
+      height: 3px; background: #1e293b; z-index: 1;
+    }
+    .timeline-step {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      position: relative; z-index: 2; text-align: center;
+    }
+    .step-circle {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: #1e293b; border: 2px solid #334155;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; color: #94a3b8; transition: all 0.3s;
+    }
+    .timeline-step.completed .step-circle {
+      background: #0284c7; border-color: #38bdf8; color: white;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+    }
+    .timeline-step.failed .step-circle {
+      background: #991b1b; border-color: #ef4444; color: white;
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.5);
+    }
+    .step-label { font-size: 11px; font-weight: 600; color: var(--text-muted); }
+    .timeline-step.completed .step-label { color: #ffffff; }
+
+    /* Side-by-Side Detail Grid */
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .code-view {
+      background: #0b1329; border: 1px solid #1e293b; border-radius: 8px;
+      padding: 14px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px; color: #cbd5e1; max-height: 440px; overflow-y: auto; line-height: 1.6;
+    }
+    .field-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 12px; background: #0f172a; border-radius: 6px; margin-bottom: 8px;
+      border: 1px solid #1e293b;
+    }
+    .field-name { font-size: 11px; font-weight: 600; color: var(--text-muted); }
+    .field-val { font-size: 12px; font-weight: 700; color: #ffffff; }
+    .source-loc { font-size: 10px; color: #38bdf8; background: rgba(56, 189, 248, 0.1); padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+
+    /* Inconsistency & Validation Lists */
+    .check-card {
+      background: #0f172a; border-left: 3px solid #334155; border-radius: 6px;
+      padding: 10px 14px; margin-bottom: 8px; display: flex; flex-direction: column; gap: 4px;
+    }
+    .check-card.pass { border-left-color: var(--success); }
+    .check-card.warn { border-left-color: var(--warn); }
+    .check-card.fail { border-left-color: var(--danger); }
+    .check-title { font-size: 12px; font-weight: 700; color: #ffffff; display: flex; justify-content: space-between; }
+    .check-reason { font-size: 11px; color: var(--text-muted); }
+
+    /* Workflow Outcome Banner */
+    .outcome-card {
+      background: linear-gradient(135deg, #0f172a, #1e1b4b);
+      border: 1px solid #4338ca; border-radius: 12px; padding: 20px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="brand">
+      <div class="brand-logo">⚡</div>
+      <div>
+        <h1>DocuPilot AI — Document Processing Platform</h1>
+        <p>Vyuham Multi-Stage Intelligent Processing & Security Engine</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="live-badge" id="live-indicator">
+        <span class="pulse-dot"></span>
+        <span id="sync-status">🟢 Extension In-Sync (Live)</span>
+      </div>
+      <button class="btn-secondary" onclick="fetchDocuments()">↻ Refresh</button>
+      <button class="btn-secondary" onclick="clearDemoData()" style="color:#f87171">🗑 Reset Store</button>
+      <a href="/university" class="btn-secondary" style="text-decoration:none; color:#38bdf8">🏛️ University Bursar Portal ↗</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Summary Counters (Top View 7) -->
+    <div class="summary-grid">
+      <div class="summary-card">
+        <span class="label">Total Handed Off</span>
+        <span class="value" id="cnt-total">0</span>
+      </div>
+      <div class="summary-card">
+        <span class="label">Blocked / Quarantine</span>
+        <span class="value" id="cnt-blocked" style="color:var(--danger)">0</span>
+      </div>
+      <div class="summary-card">
+        <span class="label">Auto-Approved</span>
+        <span class="value" id="cnt-approved" style="color:var(--success)">0</span>
+      </div>
+      <div class="summary-card">
+        <span class="label">Needs Review</span>
+        <span class="value" id="cnt-review" style="color:var(--warn)">0</span>
+      </div>
+      <div class="summary-card">
+        <span class="label">Escalated</span>
+        <span class="value" id="cnt-escalated" style="color:var(--purple)">0</span>
+      </div>
+      <div class="summary-card">
+        <span class="label">Avg Processing Time</span>
+        <span class="value" id="cnt-time" style="color:var(--primary)">0 ms</span>
+      </div>
+    </div>
+
+    <!-- Empty State View (Shown when no documents have been handed off) -->
+    <div class="empty-state" id="empty-state-view" style="display:none">
+      <div class="empty-icon">🛡️</div>
+      <div class="empty-title">Waiting for SecureDoc Extension Document Intake</div>
+      <div class="empty-desc">
+        This platform receives and displays documents verified by the <strong>SecureDoc Chrome Extension</strong>.
+        The host website never processes or uploads documents directly. To start the pipeline, open the SecureDoc extension,
+        drop a document onto the browser, and watch the verified results appear here automatically.
+      </div>
+      <div class="empty-instruction">
+        ⚡ <span>Ready for intake • Extension listening on active browser tab</span>
+      </div>
+    </div>
+
+    <!-- Main Documents Layout (Visible when documents exist) -->
+    <div class="dashboard-layout" id="main-content-view">
+      
+      <!-- Documents Table (View 2) -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>📑</span>
+            <span>Handed-Off Document Registry</span>
+          </div>
+          <span style="font-size:11px; color:var(--text-muted)">Click any document to inspect full multi-door telemetry</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Document</th>
+                <th>Type</th>
+                <th>Size</th>
+                <th>Security Gate</th>
+                <th>Workflow Decision</th>
+                <th>Issue Count</th>
+                <th>Processing Time</th>
+              </tr>
+            </thead>
+            <tbody id="docs-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Selected Document Inspector -->
+      <div id="inspector-panel" style="display:none; display:flex; flex-direction:column; gap:20px">
+        
+        <!-- Live Pipeline Timeline (View 1) -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <span>⏱️</span>
+              <span id="inspect-title">Pipeline Timeline</span>
+            </div>
+            <span class="pill pill-auto" id="inspect-decision-pill">DECISION</span>
+          </div>
+
+          <div class="timeline" id="pipeline-timeline">
+            <div class="timeline-step completed" id="tl-upload">
+              <div class="step-circle">1</div>
+              <div class="step-label">Uploaded</div>
+            </div>
+            <div class="timeline-step completed" id="tl-security">
+              <div class="step-circle">2</div>
+              <div class="step-label">Security</div>
+            </div>
+            <div class="timeline-step completed" id="tl-index">
+              <div class="step-circle">3</div>
+              <div class="step-label">Indexed</div>
+            </div>
+            <div class="timeline-step completed" id="tl-prep">
+              <div class="step-circle">4</div>
+              <div class="step-label">Preprocessed</div>
+            </div>
+            <div class="timeline-step completed" id="tl-extract">
+              <div class="step-circle">5</div>
+              <div class="step-label">Extracted</div>
+            </div>
+            <div class="timeline-step completed" id="tl-validate">
+              <div class="step-circle">6</div>
+              <div class="step-label">Validated</div>
+            </div>
+            <div class="timeline-step completed" id="tl-workflow">
+              <div class="step-circle">7</div>
+              <div class="step-label">Workflow</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Workflow Outcome Card (View 6) -->
+        <div class="outcome-card" id="outcome-card">
+          <div style="display:flex; justify-content:space-between; align-items:center">
+            <div style="font-size:14px; font-weight:700; color:#ffffff; display:flex; align-items:center; gap:8px">
+              <span>🎯</span>
+              <span>Workflow Automation Outcome</span>
+            </div>
+            <span class="pill pill-auto" id="outcome-pill">AUTO_APPROVED</span>
+          </div>
+          <div style="font-size:13px; color:#e2e8f0" id="outcome-reason">
+            All validations and arithmetic checks verified cleanly.
+          </div>
+          <div style="border-top:1px solid rgba(255,255,255,0.1); padding-top:8px; display:flex; justify-content:space-between; font-size:11px">
+            <span style="color:#94a3b8">Next Automated Action: <strong style="color:#38bdf8" id="outcome-action">Post to ERP</strong></span>
+            <span style="color:#94a3b8">Routing: <strong style="color:#cbd5e1" id="outcome-dept">Office of the Bursar</strong></span>
+          </div>
+        </div>
+
+        <!-- Document Detail: Side-by-Side Content vs Extracted Fields (View 3) -->
+        <div class="detail-grid">
+          <!-- Left: Original Content & Chunks -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">
+                <span>📄</span>
+                <span>Original Content & Chunk Locations</span>
+              </div>
+              <span id="inspect-chunk-badge" style="font-size:11px; color:var(--text-muted)">0 Chunks</span>
+            </div>
+            <div class="code-view" id="inspect-content">
+              // Ingested content will appear here...
+            </div>
+          </div>
+
+          <!-- Right: Extracted Structured Fields -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">
+                <span>🤖</span>
+                <span>AI Extracted Fields & Confidence</span>
+              </div>
+              <span class="pill pill-pass" id="inspect-conf-pill">Conf: 98%</span>
+            </div>
+            <div id="inspect-fields-list" style="display:flex; flex-direction:column; gap:8px">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Validation Panel (View 4) & Inconsistency Panel (View 5) -->
+        <div class="detail-grid">
+          <!-- Validation Panel -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">
+                <span>⚖️</span>
+                <span>Validation Rule Evaluations</span>
+              </div>
+              <span id="inspect-val-count" style="font-size:11px; color:var(--text-muted)">0 Checks</span>
+            </div>
+            <div id="inspect-validations-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Inconsistency Panel -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">
+                <span>⚠️</span>
+                <span>Inconsistency & Conflict Detection</span>
+              </div>
+              <span id="inspect-inc-count" style="font-size:11px; color:var(--text-muted)">0 Conflicts</span>
+            </div>
+            <div id="inspect-inconsistencies-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    let documentsList = [];
+    let selectedDocId = null;
+
+    // Fetch handed-off documents from local endpoint
+    async function fetchDocuments() {
+      try {
+        const res = await fetch('/api/v1/handoff/documents');
+        if (!res.ok) throw new Error('API returned ' + res.status);
+        const data = await res.json();
+        
+        documentsList = data.items || [];
+        updateSummaryCounters(data.summary || {});
+        renderDocumentsTable(documentsList);
+
+        if (documentsList.length === 0) {
+          document.getElementById('empty-state-view').style.display = 'flex';
+          document.getElementById('main-content-view').style.display = 'none';
+          document.getElementById('inspector-panel').style.display = 'none';
+        } else {
+          document.getElementById('empty-state-view').style.display = 'none';
+          document.getElementById('main-content-view').style.display = 'grid';
+          if (!selectedDocId || !documentsList.some(d => d.doc_id === selectedDocId)) {
+            selectDocument(documentsList[0].doc_id);
+          } else {
+            selectDocument(selectedDocId);
+          }
+        }
+      } catch (err) {
+        console.warn('[DocuPilot] Could not fetch documents:', err);
+      }
+    }
+
+    // Update Summary Counters
+    function updateSummaryCounters(summary) {
+      document.getElementById('cnt-total').textContent = summary.total_documents || 0;
+      document.getElementById('cnt-blocked').textContent = summary.blocked || 0;
+      document.getElementById('cnt-approved').textContent = summary.auto_approved || 0;
+      document.getElementById('cnt-review').textContent = summary.needs_review || 0;
+      document.getElementById('cnt-escalated').textContent = summary.escalated || 0;
+      document.getElementById('cnt-time').textContent = (summary.avg_processing_time_ms || 0) + ' ms';
+    }
+
+    // Render Table
+    function renderDocumentsTable(docs) {
+      const tbody = document.getElementById('docs-tbody');
+      tbody.innerHTML = docs.map(d => {
+        const isSelected = d.doc_id === selectedDocId;
+        const secStatus = (d.security?.status || 'passed').toUpperCase();
+        const decision = (d.workflow_decision?.decision || 'NEEDS_REVIEW').toUpperCase();
+        
+        let secPillClass = secStatus === 'PASSED' ? 'pill-pass' : 'pill-fail';
+        let decPillClass = decision === 'AUTO_APPROVED' ? 'pill-auto' : (decision === 'ESCALATE' ? 'pill-escalate' : (decision === 'BLOCKED' ? 'pill-block' : 'pill-warn'));
+
+        const valFails = (d.validation_results || []).filter(v => v.status === 'fail').length;
+        const incCount = (d.inconsistencies || []).length;
+        const totalIssues = valFails + incCount;
+        const totalMs = d.timings?.total_ms || 0;
+
+        return `
+          <tr class="${isSelected ? 'selected' : ''}" onclick="selectDocument('${d.doc_id}')">
+            <td><strong>${escapeHtml(d.filename || 'Document')}</strong><div style="font-size:10px; color:#64748b">${d.doc_id.substring(0, 8)}...</div></td>
+            <td><span style="font-family:monospace">${d.index?.file_type?.toUpperCase() || 'FILE'}</span></td>
+            <td>${formatBytes(d.index?.size || 0)}</td>
+            <td><span class="pill ${secPillClass}">${secStatus}</span></td>
+            <td><span class="pill ${decPillClass}">${decision}</span></td>
+            <td><span style="font-weight:700; color:${totalIssues > 0 ? '#ef4444' : '#10b981'}">${totalIssues} issue${totalIssues !== 1 ? 's' : ''}</span></td>
+            <td>${totalMs} ms</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Select Document & Populate Inspector
+    function selectDocument(docId) {
+      selectedDocId = docId;
+      const doc = documentsList.find(d => d.doc_id === docId);
+      if (!doc) return;
+
+      renderDocumentsTable(documentsList);
+      const inspector = document.getElementById('inspector-panel');
+      inspector.style.display = 'flex';
+
+      document.getElementById('inspect-title').textContent = `${doc.filename} (${doc.doc_id.substring(0, 8)})`;
+      
+      // Update Decision Pill
+      const decision = (doc.workflow_decision?.decision || 'NEEDS_REVIEW').toUpperCase();
+      const decPill = document.getElementById('inspect-decision-pill');
+      decPill.textContent = decision;
+      decPill.className = 'pill ' + (decision === 'AUTO_APPROVED' ? 'pill-auto' : (decision === 'ESCALATE' ? 'pill-escalate' : (decision === 'BLOCKED' ? 'pill-block' : 'pill-warn')));
+
+      // Update Pipeline Timeline
+      const isBlocked = (doc.security?.status || '').toLowerCase() === 'blocked';
+      document.getElementById('tl-security').className = 'timeline-step ' + (isBlocked ? 'failed' : 'completed');
+      ['tl-index', 'tl-prep', 'tl-extract', 'tl-validate', 'tl-workflow'].forEach(id => {
+        document.getElementById(id).className = 'timeline-step ' + (isBlocked ? '' : 'completed');
+      });
+
+      // Update Workflow Outcome Card
+      const outcomePill = document.getElementById('outcome-pill');
+      outcomePill.textContent = decision;
+      outcomePill.className = decPill.className;
+      document.getElementById('outcome-reason').textContent = doc.workflow_decision?.reason || 'Verified';
+      document.getElementById('outcome-action').textContent = doc.workflow_decision?.next_action || 'Archive record';
+      document.getElementById('outcome-dept').textContent = doc.workflow_decision?.department || 'Document Processing';
+
+      // Update Original Content
+      const contentEl = document.getElementById('inspect-content');
+      contentEl.textContent = doc.preprocessing?.cleaned_content || '// No text extracted or preprocessing halted by security.';
+      document.getElementById('inspect-chunk-badge').textContent = `${doc.preprocessing?.chunks_count || (doc.preprocessing?.chunks || []).length} Chunks`;
+
+      // Update Extracted Fields
+      const fieldsList = document.getElementById('inspect-fields-list');
+      const fields = doc.extracted_fields?.fields || {};
+      const fieldEntries = Object.entries(fields);
+
+      if (fieldEntries.length === 0) {
+        fieldsList.innerHTML = `<div style="color:#64748b; font-size:12px; padding:12px">No structured fields extracted.</div>`;
+      } else {
+        fieldsList.innerHTML = fieldEntries.map(([k, v]) => {
+          const valStr = typeof v === 'object' && v !== null ? (v.value !== null ? v.value : 'N/A') : v;
+          const conf = (typeof v === 'object' && v !== null && v.confidence !== undefined) ? Math.round(v.confidence * 100) : 95;
+          const loc = (typeof v === 'object' && v !== null && v.location) ? v.location : 'chunk: 1';
+          return `
+            <div class="field-row">
+              <div>
+                <div class="field-name">${escapeHtml(k.replace(/_/g, ' ').toUpperCase())}</div>
+                <div class="field-val">${escapeHtml(String(valStr))}</div>
+              </div>
+              <div style="text-align:right">
+                <span class="pill ${conf >= 85 ? 'pill-pass' : 'pill-warn'}">${conf}% Conf</span>
+                <div class="source-loc" style="margin-top:4px">${escapeHtml(loc)}</div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Update Validations
+      const valList = document.getElementById('inspect-validations-list');
+      const vals = doc.validation_results || [];
+      document.getElementById('inspect-val-count').textContent = `${vals.length} Checks`;
+      if (vals.length === 0) {
+        valList.innerHTML = `<div style="color:#64748b; font-size:12px; padding:12px">No validations evaluated.</div>`;
+      } else {
+        valList.innerHTML = vals.map(v => `
+          <div class="check-card ${v.status}">
+            <div class="check-title">
+              <span>${escapeHtml(v.rule.replace(/_/g, ' ').toUpperCase())}</span>
+              <span class="pill ${v.status === 'pass' ? 'pill-pass' : (v.status === 'warn' ? 'pill-warn' : 'pill-fail')}">${v.status.toUpperCase()}</span>
+            </div>
+            <div class="check-reason">${escapeHtml(v.reason)}</div>
+          </div>
+        `).join('');
+      }
+
+      // Update Inconsistencies
+      const incList = document.getElementById('inspect-inconsistencies-list');
+      const incs = doc.inconsistencies || [];
+      document.getElementById('inspect-inc-count').textContent = `${incs.length} Conflicts`;
+      if (incs.length === 0) {
+        incList.innerHTML = `<div style="color:#10b981; font-size:12px; padding:12px; background:rgba(16,185,129,0.08); border-radius:6px">✓ No intra-document or cross-batch inconsistencies detected.</div>`;
+      } else {
+        incList.innerHTML = incs.map(i => `
+          <div class="check-card fail">
+            <div class="check-title">
+              <span>${escapeHtml(i.type || 'Inconsistency')}</span>
+              <span class="pill pill-fail">${(i.severity || 'HIGH').toUpperCase()}</span>
+            </div>
+            <div class="check-reason" style="color:#fecaca">${escapeHtml(i.explanation)}</div>
+            ${i.conflicting_values ? `<pre style="font-size:10px; background:#000; padding:6px; border-radius:4px; margin-top:4px; color:#cbd5e1">${escapeHtml(JSON.stringify(i.conflicting_values, null, 2))}</pre>` : ''}
+          </div>
+        `).join('');
+      }
+    }
+
+    // Reset Store
+    async function clearDemoData() {
+      if (confirm('Clear all handed-off documents and reset to empty state?')) {
+        await fetch('/api/v1/handoff/clear', { method: 'DELETE' });
+        fetchDocuments();
+      }
+    }
+
+    // Helpers
+    function escapeHtml(str) {
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function formatBytes(bytes) {
+      if (!bytes) return '0 B';
+      const k = 1024;
+      const sizes = ['B', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return (bytes / Math.pow(k, i)).toFixed(1) + ' ' + sizes[i];
+    }
+
+    // Event Listeners for Extension & Real-time Sync
+    window.addEventListener('message', (ev) => {
+      if (ev.data && ev.data.source === 'SECUREDOC_EXTENSION') {
+        console.log('[DocuPilot] Extension event received:', ev.data);
+        fetchDocuments();
+      }
+    });
+
+    try {
+      const channel = new BroadcastChannel('securedoc_sync_channel');
+      channel.onmessage = () => fetchDocuments();
+    } catch (_) {}
+
+    // Polling loop
+    setInterval(fetchDocuments, 1500);
+    document.addEventListener('DOMContentLoaded', fetchDocuments);
+  </script>
+</body>
+</html>

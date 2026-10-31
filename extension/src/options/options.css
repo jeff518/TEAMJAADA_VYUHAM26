@@ -1,0 +1,7 @@
+@import '../styles/tailwind.css';
+
+/* Options page specific layout */
+body {
+  background-color: #f1f5f9;
+  min-height: 100vh;
+}

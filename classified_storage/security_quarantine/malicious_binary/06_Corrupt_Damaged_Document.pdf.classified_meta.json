@@ -1,0 +1,76 @@
+{
+  "document_id": "c5ff623f-97f9-4060-8deb-ea0050d7d940",
+  "original_filename": "06_Corrupt_Damaged_Document.pdf",
+  "classified_filename": "06_Corrupt_Damaged_Document.pdf",
+  "classification": {
+    "category": "SECURITY_THREAT",
+    "sub_category": "MALICIOUS_BINARY",
+    "relative_path": "security_quarantine/malicious_binary/06_Corrupt_Damaged_Document.pdf",
+    "full_path": "A:/vy26/classified_storage/security_quarantine/malicious_binary/06_Corrupt_Damaged_Document.pdf",
+    "workflow_code": "CYBER_SOC_CONTAINMENT",
+    "workflow_name": "Cyber SOC Threat Containment & Adversarial Quarantine Workflow"
+  },
+  "workflow_escalation": {
+    "workflow_id": "WF-CYBER-INCIDENT-001",
+    "workflow_code": "CYBER_SOC_CONTAINMENT",
+    "workflow_name": "Cyber SOC Threat Containment & Adversarial Quarantine Workflow",
+    "department": "Office of Information Security (OIS) / SOC",
+    "assigned_agent": "CyberGuard Sentinel AI (Level-3 Incident Handler)",
+    "priority": "CRITICAL",
+    "status": "CONTAINED_AND_QUARANTINED",
+    "sla": "Instant Isolation (< 0.05s)",
+    "action_summary": "Malicious payload isolated; host submission gates locked; incident logged to SOC SIEM.",
+    "escalated_actions": [
+      "Host website file input locked to prevent form submission",
+      "Adversarial CWE-1427 fingerprint added to zero-trust threat registry",
+      "Forensic metadata manifest written to security quarantine store",
+      "Automated SOC incident alert dispatched with source telemetry"
+    ],
+    "stages": [
+      {
+        "step": 1,
+        "name": "Door 2 AI Deep Heuristic Scan",
+        "status": "FLAGGED",
+        "detail": "Prompt injection trigger pattern identified in document body"
+      },
+      {
+        "step": 2,
+        "name": "Fail-Closed Gateway Intercept",
+        "status": "COMPLETED",
+        "detail": "Execution halted; file quarantined in isolated sandbox"
+      },
+      {
+        "step": 3,
+        "name": "Adversarial Fingerprint Extraction",
+        "status": "COMPLETED",
+        "detail": "CWE-1427 signature generated and hashed"
+      },
+      {
+        "step": 4,
+        "name": "SOC Escalation & Access Revocation",
+        "status": "ACTIVE",
+        "detail": "Incident escalated to OIS Incident Response Team"
+      }
+    ]
+  },
+  "security_disposition": {
+    "final_decision": "BLOCK",
+    "door1_decision": "BLOCK",
+    "door2_decision": "PENDING",
+    "risk_score": 0,
+    "clearance_token": "SECUREDOC-REJECT-THREAT"
+  },
+  "explainability": {
+    "verdict": "BLOCKED_BY_AI_GATEWAY",
+    "threat_name": "Prohibited File Binary / Exploit (Door 1)",
+    "threat_severity": "CRITICAL (Risk 100/100)",
+    "root_cause_analysis": "Door 1 Violation: PDF is corrupted or structurally malformed",
+    "target_vector": "System Instruction Override / Exemption Clause",
+    "evidence_excerpt": "Malicious trigger phrase detected in document body",
+    "action_taken": "Document quarantined, submission barred from destination server, audit log anchored."
+  },
+  "extracted_data": {},
+  "dte_validation": {},
+  "three_way_match": {},
+  "dispatched_at": "2026-10-30T22:21:51.982946Z"
+}

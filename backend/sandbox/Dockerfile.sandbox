@@ -1,0 +1,35 @@
+# Minimal Python sandbox container for isolated document processing
+FROM python:3.11-slim
+
+# Prevent network calls during runtime
+ENV http_proxy=""
+ENV https_proxy=""
+ENV NO_PROXY="*"
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libgl1 \
+    libglib2.0-0 \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir \
+    pymupdf>=1.24.0 \
+    paddleocr>=2.7.3 \
+    paddlepaddle>=2.6.0 \
+    pillow>=10.3.0
+
+# Non-root unprivileged sandbox user
+RUN useradd -m -u 10001 sandboxuser
+
+WORKDIR /sandbox
+COPY sandbox_entrypoint.py /sandbox/entrypoint.py
+
+RUN chmod 555 /sandbox/entrypoint.py && \
+    mkdir -p /input /output && \
+    chown -R sandboxuser:sandboxuser /output
+
+USER sandboxuser
+
+ENTRYPOINT ["python", "/sandbox/entrypoint.py"]

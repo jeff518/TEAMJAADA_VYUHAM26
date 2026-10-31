@@ -1,0 +1,12 @@
+=====================================================
+STUDENT FINANCIAL VOUCHER
+Academic Term: Fall 2026
+Student Name: Alice Walker
+Date: 2026-10-30
+Currency: USD
+
+Fee Breakdown:
+Tuition: $3000.00
+Subtotal: $3000.00
+Total Amount: $3000.00
+=====================================================

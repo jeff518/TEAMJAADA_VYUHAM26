@@ -1,0 +1,1533 @@
+{
+  "doc-01-clean": {
+    "doc_id": "doc-01-clean",
+    "filename": "01_Clean_Invoice.txt",
+    "security": {
+      "status": "passed",
+      "door1_decision": "ALLOW",
+      "door2_decision": "ALLOW",
+      "reasons": [],
+      "risk_score": 0
+    },
+    "index": {
+      "doc_id": "doc-01-clean",
+      "filename": "01_Clean_Invoice.txt",
+      "file_type": "txt",
+      "size": 577,
+      "upload_time": "2026-10-30T22:50:38.052261+00:00",
+      "security_status": "passed",
+      "index_status": "indexed",
+      "indexed_at": "2026-10-30T22:50:40.129697+00:00",
+      "metadata": {}
+    },
+    "preprocessing": {
+      "doc_id": "doc-01-clean",
+      "data_type": "text",
+      "cleaned_content": "=====================================================\nACME INDUSTRIAL SUPPLIES INC.\nCommercial Tax Invoice\nInvoice #: INV-2026-1001\nVendor: Acme Industrial Supplies Inc.\nVendor Tax ID: US-EIN-9948210\nCustomer: Apex Enterprise Systems Ltd\nDate: 2026-10-30\nDue Date: 2026-11-30\nCurrency: USD\n\nLINE ITEMS:\n1. High-Precision Sensor Module | Qty: 4 | Unit Price: $250.00 | Amount: $1000.00\n2. Industrial Power Unit 500W | Qty: 2 | Unit Price: $500.00 | Amount: $1000.00\n\nSubtotal: $2000.00\nTax: $200.00\nTotal Amount: $2200.00\n=====================================================",
+      "chunks": [
+        {
+          "chunk_id": 1,
+          "text": "=====================================================\nACME INDUSTRIAL SUPPLIES INC.\nCommercial Tax Invoice\nInvoice #: INV-2026-1001\nVendor: Acme Industrial Supplies Inc.\nVendor Tax ID: US-EIN-9948210\nCustomer: Apex Enterprise Systems Ltd\nDate: 2026-10-30\nDue Date: 2026-11-30\nCurrency: USD\n\nLINE ITEMS:\n1. High-Precision Sensor Module | Qty: 4 | Unit Price: $250.00 | Amount: $1000.00\n2. Industrial Power Unit 500W | Qty: 2 | Unit Price: $500.00 | Amount: $1000.00\n\nSubtotal: $2000.00\nTax: $200.00\nTotal Amount: $2200.00\n=====================================================",
+          "location": "chunk: 1",
+          "char_count": 574,
+          "token_count_est": 143
+        }
+      ],
+      "metadata": {
+        "filename": "01_Clean_Invoice.txt",
+        "file_ext": ".txt",
+        "encoding": "utf-8",
+        "paragraphs_count": 3
+      },
+      "stats": {
+        "before_chars": 577,
+        "after_chars": 574,
+        "before_lines": 20,
+        "after_lines": 19,
+        "reduction_pct": 0.52,
+        "chunks_count": 1
+      },
+      "status": "success",
+      "error_message": null,
+      "processing_time_ms": 0.77
+    },
+    "extracted_fields": {
+      "document_type": "invoice",
+      "document_summary": "Structured extraction for invoice (01_Clean_Invoice.txt)",
+      "fields": {
+        "invoice_number": {
+          "value": "INV-2026-1001",
+          "confidence": 0.96,
+          "location": "chunk: 1"
+        },
+        "student_id": {
+          "value": null,
+          "confidence": 0.0,
+          "location": null
+        },
+        "po_number": {
+          "value": null,
+          "confidence": 0.0,
+          "location": null
+        },
+        "vendor_name": {
+          "value": "Acme Industrial Supplies Inc.",
+          "confidence": 0.92,
+          "location": "chunk: 1"
+        },
+        "customer_name": {
+          "value": "Apex Enterprise Systems Ltd",
+          "confidence": 0.93,
+          "location": "chunk: 1"
+        },
+        "invoice_date": {
+          "value": "2026-10-30",
+          "confidence": 0.95,
+          "location": "chunk: 1"
+        },
+        "due_date": {
+          "value": "2026-11-30",
+          "confidence": 0.88,
+          "location": "chunk: 1"
+        },
+        "currency": {
+          "value": "USD",
+          "confidence": 0.99,
+          "location": "chunk: 1"
+        },
+        "total_amount": {
+          "value": 2200.0,
+          "confidence": 0.98,
+          "location": "chunk: 1"
+        },
+        "subtotal": {
+          "value": 2000.0,
+          "confidence": 0.94,
+          "location": "chunk: 1"
+        },
+        "tax_amount": {
+          "value": 200.0,
+          "confidence": 0.9,
+          "location": "chunk: 1"
+        }
+      },
+      "line_items": [
+        {
+          "description": "Invoice Core Obligation",
+          "quantity": 1.0,
+          "unit_price": 2000.0,
+          "amount": 2000.0,
+          "confidence": 0.95,
+          "location": "chunk: 1"
+        }
+      ]
+    },
+    "validation_results": [
+      {
+        "rule": "required_fields",
+        "status": "pass",
+        "reason": "All 4 mandatory fields are present."
+      },
+      {
+        "rule": "date_format",
+        "status": "pass",
+        "reason": "Invoice date '2026-10-30' matches standard calendar format."
+      },
+      {
+        "rule": "chronological_sequence",
+        "status": "pass",
+        "reason": "Due date (2026-11-30) is on or after invoice date (2026-10-30)."
+      },
+      {
+        "rule": "positive_amount_range",
+        "status": "pass",
+        "reason": "Total amount $2,200.00 is positive and within normal transaction bounds."
+      },
+      {
+        "rule": "allowed_currency",
+        "status": "pass",
+        "reason": "Currency 'USD' is an allowed ISO currency."
+      },
+      {
+        "rule": "arithmetic_line_items_sum",
+        "status": "pass",
+        "reason": "Sum of line items ($2,000.00) matches subtotal ($2,000.00)."
+      },
+      {
+        "rule": "arithmetic_total_reconciliation",
+        "status": "pass",
+        "reason": "Subtotal ($2,000.00) + Tax ($200.00) equals Total ($2,200.00)."
+      }
+    ],
+    "inconsistencies": [],
+    "workflow_decision": {
+      "decision": "auto_approved",
+      "reason": "Vendor invoice verified mathematically with 100% rule conformity.",
+      "next_action": "Schedule automated ACH disbursement batch in ERP ledger",
+      "routing_code": "WF-AP-INVOICE",
+      "department": "Accounts Payable / Procurement Logistics",
+      "average_confidence": 0.94,
+      "confidence_met": true
+    },
+    "timings": {
+      "security_ms": 2069.15,
+      "index_ms": 10.39,
+      "preprocess_ms": 0.89,
+      "extraction_ms": 1.97,
+      "validation_ms": 0.28,
+      "inconsistency_ms": 0.48,
+      "workflow_ms": 0.59,
+      "total_ms": 2083.93
+    },
+    "handed_off_at": "2026-10-30T22:50:40.136543+00:00"
+  },
+  "doc-02-wrong-total": {
+    "doc_id": "doc-02-wrong-total",
+    "filename": "02_Invoice_Wrong_Total.txt",
+    "security": {
+      "status": "passed",
+      "door1_decision": "ALLOW",
+      "door2_decision": "ALLOW",
+      "reasons": [],
+      "risk_score": 0
+    },
+    "index": {
+      "doc_id": "doc-02-wrong-total",
+      "filename": "02_Invoice_Wrong_Total.txt",
+      "file_type": "txt",
+      "size": 528,
+      "upload_time": "2026-10-30T22:50:40.138745+00:00",
+      "security_status": "passed",
+      "index_status": "indexed",
+      "indexed_at": "2026-10-30T22:50:42.179176+00:00",
+      "metadata": {}
+    },
+    "preprocessing": {
+      "doc_id": "doc-02-wrong-total",
+      "data_type": "text",
+      "cleaned_content": "=====================================================\nGLOBAL HARDWARE LOGISTICS\nCommercial Invoice\nInvoice #: INV-2026-8844\nVendor: Global Hardware Logistics\nCustomer: Enterprise Operations Ltd\nDate: 2026-10-30\nDue Date: 2026-11-20\nCurrency: USD\n\nLINE ITEMS:\n1. Fiber Optic Patch Cable 10m | Qty: 10 | Unit Price: $30.00 | Amount: $300.00\n2. Managed Gigabit Switch 24P | Qty: 1 | Unit Price: $500.00 | Amount: $500.00\n\nSubtotal: $800.00\nTax: $80.00\nTotal Amount: $1450.00\n=====================================================",
+      "chunks": [
+        {
+          "chunk_id": 1,
+          "text": "=====================================================\nGLOBAL HARDWARE LOGISTICS\nCommercial Invoice\nInvoice #: INV-2026-8844\nVendor: Global Hardware Logistics\nCustomer: Enterprise Operations Ltd\nDate: 2026-10-30\nDue Date: 2026-11-20\nCurrency: USD\n\nLINE ITEMS:\n1. Fiber Optic Patch Cable 10m | Qty: 10 | Unit Price: $30.00 | Amount: $300.00\n2. Managed Gigabit Switch 24P | Qty: 1 | Unit Price: $500.00 | Amount: $500.00\n\nSubtotal: $800.00\nTax: $80.00\nTotal Amount: $1450.00\n=====================================================",
+          "location": "chunk: 1",
+          "char_count": 525,
+          "token_count_est": 131
+        }
+      ],
+      "metadata": {
+        "filename": "02_Invoice_Wrong_Total.txt",
+        "file_ext": ".txt",
+        "encoding": "utf-8",
+        "paragraphs_count": 3
+      },
+      "stats": {
+        "before_chars": 528,
+        "after_chars": 525,
+        "before_lines": 19,
+        "after_lines": 18,
+        "reduction_pct": 0.57,
+        "chunks_count": 1
+      },
+      "status": "success",
+      "error_message": null,
+      "processing_time_ms": 0.3
+    },
+    "extracted_fields": {
+      "document_type": "invoice",
+      "document_summary": "Structured extraction for invoice (02_Invoice_Wrong_Total.txt)",
+      "fields": {
+        "invoice_number": {
+          "value": "INV-2026-8844",
+          "confidence": 0.96,
+          "location": "chunk: 1"
+        },
+        "student_id": {
+          "value": null,
+          "confidence": 0.0,
+          "location": null
+        },
+        "po_number": {
+          "value": null,
+          "confidence": 0.0,
+          "location": null
+        },
+        "vendor_name": {
+          "value": "Global Hardware Logistics",
+          "confidence": 0.92,
+          "location": "chunk: 1"
+        },
+        "customer_name": {
+          "value": "Enterprise Operations Ltd",
+          "confidence": 0.93,
+          "location": "chunk: 1"
+        },
+        "invoice_date": {
+          "value": "2026-10-30",
+          "confidence": 0.95,
+          "location": "chunk: 1"
+        },
+        "due_date": {
+          "value": "2026-11-20",
+          "confidence": 0.88,
+          "location": "chunk: 1"
+        },
+        "currency": {
+          "value": "USD",
+          "confidence": 0.99,
+          "location": "chunk: 1"
+        },
+        "total_amount": {
+          "value": 1450.0,
+          "confidence": 0.98,
+          "location": "chunk: 1"
+        },
+        "subtotal": {
+          "value": 800.0,
+          "confidence": 0.94,
+          "location": "chunk: 1"
+        },
+        "tax_amount": {
+          "value": 80.0,
+          "confidence": 0.9,
+          "location": "chunk: 1"
+        }
+      },
+      "line_items": [
+        {
+          "description": "Invoice Core Obligation",
+          "quantity": 1.0,
+          "unit_price": 800.0,
+          "amount": 800.0,
+          "confidence": 0.95,
+          "location": "chunk: 1"
+        }
+      ]
+    },
+    "validation_results": [
+      {
+        "rule": "required_fields",
+        "status": "pass",
+        "reason": "All 4 mandatory fields are present."
+      },
+      {
+        "rule": "date_format",
+        "status": "pass",
+        "reason": "Invoice date '2026-10-30' matches standard calendar format."
+      },
+      {
+        "rule": "chronological_sequence",
+        "status": "pass",
+        "reason": "Due date (2026-11-20) is on or after invoice date (2026-10-30)."
+      },
+      {
+        "rule": "positive_amount_range",
+        "status": "pass",
+        "reason": "Total amount $1,450.00 is positive and within normal transaction bounds."
+      },
+      {
+        "rule": "allowed_currency",
+        "status": "pass",
+        "reason": "Currency 'USD' is an allowed ISO currency."
+      },
+      {
+        "rule": "arithmetic_line_items_sum",
+        "status": "pass",
+        "reason": "Sum of line items ($800.00) matches subtotal ($800.00)."
+      },
+      {
+        "rule": "arithmetic_total_reconciliation",
+        "status": "fail",
+        "reason": "Calculation error: Subtotal ($800.00) + Tax ($80.00) = $880.00, but document states $1,450.00."
+      }
+    ],
+    "inconsistencies": [
+      {
+        "id": "INC-INTRA-MATH-doc-02-w",
+        "category": "intra_document",
+        "type": "math_discrepancy",
+        "severity": "high",
+        "explanation": "Calculated total ($880.00) does not match stated total ($1,450.00). Line items sum to $800.00.",
+        "conflicting_values": {
+          "line_items_sum": 800.0,
+          "subtotal": 800.0,
+          "tax": 80.0,
+          "calculated_total": 880.0,
+          "stated_total": 1450.0
+        }
+      }
+    ],
+    "workflow_decision": {
+      "decision": "escalate",
+      "reason": "Critical arithmetic mismatch or cross-vendor tax ID inconsistency.",
+      "next_action": "Escalate to AP Manager and freeze vendor disbursement",
+      "routing_code": "WF-AP-INVOICE",
+      "department": "Accounts Payable / Procurement Logistics",
+      "average_confidence": 0.94,
+      "confidence_met": true
+    },
+    "timings": {
+      "security_ms": 2033.57,
+      "index_ms": 8.75,
+      "preprocess_ms": 0.37,
+      "extraction_ms": 0.13,
+      "validation_ms": 0.06,
+      "inconsistency_ms": 8.91,
+      "workflow_ms": 0.49,
+      "total_ms": 2052.44
+    },
+    "handed_off_at": "2026-10-30T22:50:42.191566+00:00"
+  },
+  "doc-03-missing-field": {
+    "doc_id": "doc-03-missing-field",
+    "filename": "03_Form_Missing_Required_Field.txt",
+    "security": {
+      "status": "passed",
+      "door1_decision": "ALLOW",
+      "door2_decision": "ALLOW",
+      "reasons": [],
+      "risk_score": 0
+    },
+    "index": {
+      "doc_id": "doc-03-missing-field",
+      "filename": "03_Form_Missing_Required_Field.txt",
+      "file_type": "txt",
+      "size": 293,
+      "upload_time": "2026-10-30T22:50:42.193940+00:00",
+      "security_status": "passed",
+      "index_status": "indexed",
+      "indexed_at": "2026-10-30T22:50:44.256729+00:00",
+      "metadata": {}
+    },
+    "preprocessing": {
+      "doc_id": "doc-03-missing-field",
+      "data_type": "text",
+      "cleaned_content": "=====================================================\nSTUDENT FINANCIAL VOUCHER\nAcademic Term: Fall 2026\nStudent Name: Alice Walker\nDate: 2026-10-30\nCurrency: USD\n\nFee Breakdown:\nTuition: $3000.00\nSubtotal: $3000.00\nTotal Amount: $3000.00\n=====================================================",
+      "chunks": [
+        {
+          "chunk_id": 1,
+          "text": "=====================================================\nSTUDENT FINANCIAL VOUCHER\nAcademic Term: Fall 2026\nStudent Name: Alice Walker\nDate: 2026-10-30\nCurrency: USD\n\nFee Breakdown:\nTuition: $3000.00\nSubtotal: $3000.00\nTotal Amount: $3000.00\n=====================================================",
+          "location": "chunk: 1",
+          "char_count": 292,
+          "token_count_est": 73
+        }
+      ],
+      "metadata": {
+        "filename": "03_Form_Missing_Required_Field.txt",
+        "file_ext": ".txt",
+        "encoding": "utf-8",
+        "paragraphs_count": 2
+      },
+      "stats": {
+        "before_chars": 293,
+        "after_chars": 292,
+        "before_lines": 13,
+        "after_lines": 12,
+        "reduction_pct": 0.34,
+        "chunks_count": 1
+      },
+      "status": "success",
+      "error_message": null,
+      "processing_time_ms": 0.21
+    },
+    "extracted_fields": {
+      "document_type": "tuition_receipt",
+      "document_summary": "Structured extraction for tuition_receipt (03_Form_Missing_Required_Field.txt)",
+      "fields": {
+        "invoice_number": {
+          "value": null,
+          "confidence": 0.0,
+          "location": null
+        },
+        "student_id": {
+          "value": null,
+          "confidence": 0.0,
+          "location": null
+        },
+        "po_number": {
+          "value": null,
+          "confidence": 0.0,
+          "location": null
+        },
+        "vendor_name": {
+          "value": null,
+          "confidence": 0.0,
+          "location": null
+        },
+        "customer_name": {
+          "value": "Alice Walker",
+          "confidence": 0.93,
+          "location": "chunk: 1"
+        },
+        "invoice_date": {
+          "value": "2026-10-30",
+          "confidence": 0.95,
+          "location": "chunk: 1"
+        },
+        "due_date": {
+          "value": null,
+          "confidence": 0.0,
+          "location": null
+        },
+        "currency": {
+          "value": "USD",
+          "confidence": 0.99,
+          "location": "chunk: 1"
+        },
+        "total_amount": {
+          "value": 3000.0,
+          "confidence": 0.98,
+          "location": "chunk: 1"
+        },
+        "subtotal": {
+          "value": 3000.0,
+          "confidence": 0.94,
+          "location": "chunk: 1"
+        },
+        "tax_amount": {
+          "value": 0.0,
+          "confidence": 0.9,
+          "location": "chunk: 1"
+        }
+      },
+      "line_items": [
+        {
+          "description": "Tuition Receipt Core Obligation",
+          "quantity": 1.0,
+          "unit_price": 3000.0,
+          "amount": 3000.0,
+          "confidence": 0.95,
+          "location": "chunk: 1"
+        }
+      ]
+    },
+    "validation_results": [
+      {
+        "rule": "required_fields",
+        "status": "fail",
+        "reason": "Missing mandatory field(s): vendor_name, invoice_number"
+      },
+      {
+        "rule": "date_format",
+        "status": "pass",
+        "reason": "Invoice date '2026-10-30' matches standard calendar format."
+      },
+      {
+        "rule": "positive_amount_range",
+        "status": "pass",
+        "reason": "Total amount $3,000.00 is positive and within normal transaction bounds."
+      },
+      {
+        "rule": "allowed_currency",
+        "status": "pass",
+        "reason": "Currency 'USD' is an allowed ISO currency."
+      },
+      {
+        "rule": "arithmetic_line_items_sum",
+        "status": "pass",
+        "reason": "Sum of line items ($3,000.00) matches subtotal ($3,000.00)."
+      },
+      {
+        "rule": "arithmetic_total_reconciliation",
+        "status": "pass",
+        "reason": "Subtotal ($3,000.00) + Tax ($0.00) equals Total ($3,000.00)."
+      }
+    ],
+    "inconsistencies": [],
+    "workflow_decision": {
+      "decision": "escalate",
+      "reason": "Mandatory tuition validation rule or arithmetic check failed.",
+      "next_action": "Hold student ledger posting and notify Bursar review desk",
+      "routing_code": "WF-BURSAR-SETTLE",
+      "department": "Office of the Bursar / Student Accounts",
+      "average_confidence": 0.95,
+      "confidence_met": true
+    },
+    "timings": {
+      "security_ms": 2054.53,
+      "index_ms": 10.35,
+      "preprocess_ms": 0.25,
+      "extraction_ms": 0.1,
+      "validation_ms": 0.05,
+      "inconsistency_ms": 9.98,
+      "workflow_ms": 0.31,
+      "total_ms": 2075.68
+    },
+    "handed_off_at": "2026-10-30T22:50:44.269965+00:00"
+  },
+  "doc-04a-batch": {
+    "doc_id": "doc-04a-batch",
+    "filename": "04A_Batch_Student_Record.txt",
+    "security": {
+      "status": "passed",
+      "door1_decision": "ALLOW",
+      "door2_decision": "ALLOW",
+      "reasons": [],
+      "risk_score": 0
+    },
+    "index": {
+      "doc_id": "doc-04a-batch",
+      "filename": "04A_Batch_Student_Record.txt",
+      "file_type": "txt",
+      "size": 251,
+      "upload_time": "2026-10-30T22:50:44.272635+00:00",
+      "security_status": "passed",
+      "index_status": "indexed",
+      "indexed_at": "2026-10-30T22:50:46.314908+00:00",
+      "metadata": {}
+    },
+    "preprocessing": {
+      "doc_id": "doc-04a-batch",
+      "data_type": "text",
+      "cleaned_content": "APEX UNIVERSITY OF TECHNOLOGY\nTuition Fee Receipt\nReceipt #: REC-2026-7701\nVendor: Apex University of Technology\nStudent ID: STU-88210\nStudent Name: Jane Smith\nDate: 2026-10-15\nDue Date: 2026-11-15\nSubtotal: $4850.00\nTax: $0.00\nTotal Amount: $4850.00",
+      "chunks": [
+        {
+          "chunk_id": 1,
+          "text": "APEX UNIVERSITY OF TECHNOLOGY\nTuition Fee Receipt\nReceipt #: REC-2026-7701\nVendor: Apex University of Technology\nStudent ID: STU-88210\nStudent Name: Jane Smith\nDate: 2026-10-15\nDue Date: 2026-11-15\nSubtotal: $4850.00\nTax: $0.00\nTotal Amount: $4850.00",
+          "location": "chunk: 1",
+          "char_count": 250,
+          "token_count_est": 62
+        }
+      ],
+      "metadata": {
+        "filename": "04A_Batch_Student_Record.txt",
+        "file_ext": ".txt",
+        "encoding": "utf-8",
+        "paragraphs_count": 1
+      },
+      "stats": {
+        "before_chars": 251,
+        "after_chars": 250,
+        "before_lines": 12,
+        "after_lines": 11,
+        "reduction_pct": 0.4,
+        "chunks_count": 1
+      },
+      "status": "success",
+      "error_message": null,
+      "processing_time_ms": 0.31
+    },
+    "extracted_fields": {
+      "document_type": "tuition_receipt",
+      "document_summary": "Structured extraction for tuition_receipt (04A_Batch_Student_Record.txt)",
+      "fields": {
+        "invoice_number": {
+          "value": "REC-2026-7701",
+          "confidence": 0.96,
+          "location": "chunk: 1"
+        },
+        "student_id": {
+          "value": "STU-88210",
+          "confidence": 0.98,
+          "location": "chunk: 1"
+        },
+        "po_number": {
+          "value": null,
+          "confidence": 0.0,
+          "location": null
+        },
+        "vendor_name": {
+          "value": "Apex University of Technology",
+          "confidence": 0.92,
+          "location": "chunk: 1"
+        },
+        "customer_name": {
+          "value": "Jane Smith",
+          "confidence": 0.93,
+          "location": "chunk: 1"
+        },
+        "invoice_date": {
+          "value": "2026-10-15",
+          "confidence": 0.95,
+          "location": "chunk: 1"
+        },
+        "due_date": {
+          "value": "2026-11-15",
+          "confidence": 0.88,
+          "location": "chunk: 1"
+        },
+        "currency": {
+          "value": "USD",
+          "confidence": 0.99,
+          "location": "chunk: 1"
+        },
+        "total_amount": {
+          "value": 4850.0,
+          "confidence": 0.98,
+          "location": "chunk: 1"
+        },
+        "subtotal": {
+          "value": 4850.0,
+          "confidence": 0.94,
+          "location": "chunk: 1"
+        },
+        "tax_amount": {
+          "value": 0.0,
+          "confidence": 0.9,
+          "location": "chunk: 1"
+        }
+      },
+      "line_items": [
+        {
+          "description": "Tuition Receipt Core Obligation",
+          "quantity": 1.0,
+          "unit_price": 4850.0,
+          "amount": 4850.0,
+          "confidence": 0.95,
+          "location": "chunk: 1"
+        }
+      ]
+    },
+    "validation_results": [
+      {
+        "rule": "required_fields",
+        "status": "pass",
+        "reason": "All 4 mandatory fields are present."
+      },
+      {
+        "rule": "date_format",
+        "status": "pass",
+        "reason": "Invoice date '2026-10-15' matches standard calendar format."
+      },
+      {
+        "rule": "chronological_sequence",
+        "status": "pass",
+        "reason": "Due date (2026-11-15) is on or after invoice date (2026-10-15)."
+      },
+      {
+        "rule": "positive_amount_range",
+        "status": "pass",
+        "reason": "Total amount $4,850.00 is positive and within normal transaction bounds."
+      },
+      {
+        "rule": "allowed_currency",
+        "status": "pass",
+        "reason": "Currency 'USD' is an allowed ISO currency."
+      },
+      {
+        "rule": "arithmetic_line_items_sum",
+        "status": "pass",
+        "reason": "Sum of line items ($4,850.00) matches subtotal ($4,850.00)."
+      },
+      {
+        "rule": "arithmetic_total_reconciliation",
+        "status": "pass",
+        "reason": "Subtotal ($4,850.00) + Tax ($0.00) equals Total ($4,850.00)."
+      }
+    ],
+    "inconsistencies": [],
+    "workflow_decision": {
+      "decision": "auto_approved",
+      "reason": "All security gates, deterministic validations, and arithmetic rules passed with 0 inconsistencies.",
+      "next_action": "Post student tuition ledger credit, lift enrollment hold, and mint clearance token",
+      "routing_code": "WF-BURSAR-SETTLE",
+      "department": "Office of the Bursar / Student Accounts",
+      "average_confidence": 0.94,
+      "confidence_met": true
+    },
+    "timings": {
+      "security_ms": 2035.85,
+      "index_ms": 8.75,
+      "preprocess_ms": 0.37,
+      "extraction_ms": 0.09,
+      "validation_ms": 0.06,
+      "inconsistency_ms": 10.73,
+      "workflow_ms": 0.44,
+      "total_ms": 2056.4
+    },
+    "handed_off_at": "2026-10-30T22:50:46.329425+00:00"
+  },
+  "doc-04b-batch-conflict": {
+    "doc_id": "doc-04b-batch-conflict",
+    "filename": "04B_Batch_Conflicting_Student_Record.txt",
+    "security": {
+      "status": "passed",
+      "door1_decision": "ALLOW",
+      "door2_decision": "ALLOW",
+      "reasons": [],
+      "risk_score": 0
+    },
+    "index": {
+      "doc_id": "doc-04b-batch-conflict",
+      "filename": "04B_Batch_Conflicting_Student_Record.txt",
+      "file_type": "txt",
+      "size": 255,
+      "upload_time": "2026-10-30T22:50:46.332832+00:00",
+      "security_status": "passed",
+      "index_status": "indexed",
+      "indexed_at": "2026-10-30T22:50:48.382721+00:00",
+      "metadata": {}
+    },
+    "preprocessing": {
+      "doc_id": "doc-04b-batch-conflict",
+      "data_type": "text",
+      "cleaned_content": "APEX UNIVERSITY OF TECHNOLOGY\nTuition Fee Receipt\nReceipt #: REC-2026-7702\nVendor: Apex University of Technology\nStudent ID: STU-88210\nStudent Name: Robert Johnson\nDate: 2026-10-30\nDue Date: 2026-11-30\nSubtotal: $4850.00\nTax: $0.00\nTotal Amount: $4850.00",
+      "chunks": [
+        {
+          "chunk_id": 1,
+          "text": "APEX UNIVERSITY OF TECHNOLOGY\nTuition Fee Receipt\nReceipt #: REC-2026-7702\nVendor: Apex University of Technology\nStudent ID: STU-88210\nStudent Name: Robert Johnson\nDate: 2026-10-30\nDue Date: 2026-11-30\nSubtotal: $4850.00\nTax: $0.00\nTotal Amount: $4850.00",
+          "location": "chunk: 1",
+          "char_count": 254,
+          "token_count_est": 63
+        }
+      ],
+      "metadata": {
+        "filename": "04B_Batch_Conflicting_Student_Record.txt",
+        "file_ext": ".txt",
+        "encoding": "utf-8",
+        "paragraphs_count": 1
+      },
+      "stats": {
+        "before_chars": 255,
+        "after_chars": 254,
+        "before_lines": 12,
+        "after_lines": 11,
+        "reduction_pct": 0.39,
+        "chunks_count": 1
+      },
+      "status": "success",
+      "error_message": null,
+      "processing_time_ms": 0.24
+    },
+    "extracted_fields": {
+      "document_type": "tuition_receipt",
+      "document_summary": "Structured extraction for tuition_receipt (04B_Batch_Conflicting_Student_Record.txt)",
+      "fields": {
+        "invoice_number": {
+          "value": "REC-2026-7702",
+          "confidence": 0.96,
+          "location": "chunk: 1"
+        },
+        "student_id": {
+          "value": "STU-88210",
+          "confidence": 0.98,
+          "location": "chunk: 1"
+        },
+        "po_number": {
+          "value": null,
+          "confidence": 0.0,
+          "location": null
+        },
+        "vendor_name": {
+          "value": "Apex University of Technology",
+          "confidence": 0.92,
+          "location": "chunk: 1"
+        },
+        "customer_name": {
+          "value": "Robert Johnson",
+          "confidence": 0.93,
+          "location": "chunk: 1"
+        },
+        "invoice_date": {
+          "value": "2026-10-30",
+          "confidence": 0.95,
+          "location": "chunk: 1"
+        },
+        "due_date": {
+          "value": "2026-11-30",
+          "confidence": 0.88,
+          "location": "chunk: 1"
+        },
+        "currency": {
+          "value": "USD",
+          "confidence": 0.99,
+          "location": "chunk: 1"
+        },
+        "total_amount": {
+          "value": 4850.0,
+          "confidence": 0.98,
+          "location": "chunk: 1"
+        },
+        "subtotal": {
+          "value": 4850.0,
+          "confidence": 0.94,
+          "location": "chunk: 1"
+        },
+        "tax_amount": {
+          "value": 0.0,
+          "confidence": 0.9,
+          "location": "chunk: 1"
+        }
+      },
+      "line_items": [
+        {
+          "description": "Tuition Receipt Core Obligation",
+          "quantity": 1.0,
+          "unit_price": 4850.0,
+          "amount": 4850.0,
+          "confidence": 0.95,
+          "location": "chunk: 1"
+        }
+      ]
+    },
+    "validation_results": [
+      {
+        "rule": "required_fields",
+        "status": "pass",
+        "reason": "All 4 mandatory fields are present."
+      },
+      {
+        "rule": "date_format",
+        "status": "pass",
+        "reason": "Invoice date '2026-10-30' matches standard calendar format."
+      },
+      {
+        "rule": "chronological_sequence",
+        "status": "pass",
+        "reason": "Due date (2026-11-30) is on or after invoice date (2026-10-30)."
+      },
+      {
+        "rule": "positive_amount_range",
+        "status": "pass",
+        "reason": "Total amount $4,850.00 is positive and within normal transaction bounds."
+      },
+      {
+        "rule": "allowed_currency",
+        "status": "pass",
+        "reason": "Currency 'USD' is an allowed ISO currency."
+      },
+      {
+        "rule": "arithmetic_line_items_sum",
+        "status": "pass",
+        "reason": "Sum of line items ($4,850.00) matches subtotal ($4,850.00)."
+      },
+      {
+        "rule": "arithmetic_total_reconciliation",
+        "status": "pass",
+        "reason": "Subtotal ($4,850.00) + Tax ($0.00) equals Total ($4,850.00)."
+      }
+    ],
+    "inconsistencies": [
+      {
+        "id": "INC-BATCH-ENTITY-doc-04b-",
+        "category": "batch_cross_check",
+        "type": "entity_name_discrepancy",
+        "severity": "high",
+        "explanation": "Student ID 'STU-88210' is registered to 'Robert Johnson' in this file, but was submitted as 'Jane Smith' in prior file doc-04a-.",
+        "conflicting_values": {
+          "student_id": "STU-88210",
+          "current_name": "Robert Johnson",
+          "previous_name": "Jane Smith"
+        }
+      }
+    ],
+    "workflow_decision": {
+      "decision": "escalate",
+      "reason": "High-severity financial inconsistency or duplicate ID conflict detected.",
+      "next_action": "Route to Bursar Senior Auditor for compliance investigation",
+      "routing_code": "WF-BURSAR-SETTLE",
+      "department": "Office of the Bursar / Student Accounts",
+      "average_confidence": 0.94,
+      "confidence_met": true
+    },
+    "timings": {
+      "security_ms": 2041.6,
+      "index_ms": 10.33,
+      "preprocess_ms": 0.29,
+      "extraction_ms": 0.09,
+      "validation_ms": 0.06,
+      "inconsistency_ms": 7.47,
+      "workflow_ms": 0.3,
+      "total_ms": 2060.28
+    },
+    "handed_off_at": "2026-10-30T22:50:48.393490+00:00"
+  },
+  "doc-06-csv": {
+    "doc_id": "doc-06-csv",
+    "filename": "07_Department_Expense_Report.csv",
+    "security": {
+      "status": "passed",
+      "door1_decision": "ALLOW",
+      "door2_decision": "ALLOW",
+      "reasons": [],
+      "risk_score": 0
+    },
+    "index": {
+      "doc_id": "doc-06-csv",
+      "filename": "07_Department_Expense_Report.csv",
+      "file_type": "csv",
+      "size": 422,
+      "upload_time": "2026-10-30T22:50:48.396739+00:00",
+      "security_status": "passed",
+      "index_status": "indexed",
+      "indexed_at": "2026-10-30T22:50:50.457766+00:00",
+      "metadata": {}
+    },
+    "preprocessing": {
+      "doc_id": "doc-06-csv",
+      "data_type": "tabular",
+      "cleaned_content": "=== Tabular Dataset: 07_Department_Expense_Report.csv ===\nColumns (7): expenseid (str), date (str), department (str), category (str), description (str), amount (str), approvedby (str)\n\n--- [Rows 1 to 4] ---\n  expenseid       date       department    category               description  amount     approvedby\nEXP-2026-01 2026-10-05 Computer Science    Hardware       GPU Cooling Modules   850.0      Dr. Vance\nEXP-2026-02 2026-10-12     Robotics Lab Electronics             Sensor Arrays   420.0      Dr. Vance\nEXP-2026-03 2026-10-19      Dean Office Conferences NeurIPS 2026 Registration  1200.0    Dean Miller\nEXP-2026-04 2026-10-26    Bursar Office    Software SSL Security Certificates   350.0 Director Smith",
+      "chunks": [
+        {
+          "chunk_id": 1,
+          "text": "  expenseid       date       department    category               description  amount     approvedby\nEXP-2026-01 2026-10-05 Computer Science    Hardware       GPU Cooling Modules   850.0      Dr. Vance\nEXP-2026-02 2026-10-12     Robotics Lab Electronics             Sensor Arrays   420.0      Dr. Vance\nEXP-2026-03 2026-10-19      Dean Office Conferences NeurIPS 2026 Registration  1200.0    Dean Miller\nEXP-2026-04 2026-10-26    Bursar Office    Software SSL Security Certificates   350.0 Director Smith",
+          "location": "rows: 1-4",
+          "char_count": 504,
+          "token_count_est": 126
+        }
+      ],
+      "metadata": {
+        "filename": "07_Department_Expense_Report.csv",
+        "columns": [
+          "expenseid",
+          "date",
+          "department",
+          "category",
+          "description",
+          "amount",
+          "approvedby"
+        ],
+        "schema": {
+          "ExpenseID": "str",
+          "Date": "str",
+          "Department": "str",
+          "Category": "str",
+          "Description": "str",
+          "Amount": "float64",
+          "ApprovedBy": "str"
+        },
+        "missing_values_handled": 0,
+        "duplicates_removed": 0
+      },
+      "stats": {
+        "before_rows": 4,
+        "after_rows": 4,
+        "columns_count": 7,
+        "missing_imputed": 0,
+        "duplicates_removed": 0,
+        "chunks_count": 1
+      },
+      "status": "success",
+      "error_message": null,
+      "processing_time_ms": 58.04
+    },
+    "extracted_fields": {
+      "document_type": "expense_report",
+      "document_summary": "Structured extraction for expense_report (07_Department_Expense_Report.csv)",
+      "fields": {
+        "invoice_number": {
+          "value": null,
+          "confidence": 0.0,
+          "location": null
+        },
+        "student_id": {
+          "value": null,
+          "confidence": 0.0,
+          "location": null
+        },
+        "po_number": {
+          "value": null,
+          "confidence": 0.0,
+          "location": null
+        },
+        "vendor_name": {
+          "value": null,
+          "confidence": 0.0,
+          "location": null
+        },
+        "customer_name": {
+          "value": null,
+          "confidence": 0.0,
+          "location": null
+        },
+        "invoice_date": {
+          "value": "2026-10-05",
+          "confidence": 0.95,
+          "location": "rows: 1-4"
+        },
+        "due_date": {
+          "value": "2026-10-12",
+          "confidence": 0.88,
+          "location": "rows: 1-4"
+        },
+        "currency": {
+          "value": "EUR",
+          "confidence": 0.99,
+          "location": "chunk: 1"
+        },
+        "total_amount": {
+          "value": 4850.0,
+          "confidence": 0.98,
+          "location": "page: 1, chunk: 1"
+        },
+        "subtotal": {
+          "value": 4850.0,
+          "confidence": 0.94,
+          "location": "page: 1, chunk: 1"
+        },
+        "tax_amount": {
+          "value": 0.0,
+          "confidence": 0.9,
+          "location": "rows: 1-4"
+        }
+      },
+      "line_items": [
+        {
+          "description": "Expense Report Core Obligation",
+          "quantity": 1.0,
+          "unit_price": 4850.0,
+          "amount": 4850.0,
+          "confidence": 0.95,
+          "location": "page: 1, chunk: 1"
+        }
+      ]
+    },
+    "validation_results": [
+      {
+        "rule": "required_fields",
+        "status": "pass",
+        "reason": "All 1 mandatory fields are present."
+      },
+      {
+        "rule": "date_format",
+        "status": "pass",
+        "reason": "Invoice date '2026-10-05' matches standard calendar format."
+      },
+      {
+        "rule": "chronological_sequence",
+        "status": "pass",
+        "reason": "Due date (2026-10-12) is on or after invoice date (2026-10-05)."
+      },
+      {
+        "rule": "positive_amount_range",
+        "status": "pass",
+        "reason": "Total amount $4,850.00 is positive and within normal transaction bounds."
+      },
+      {
+        "rule": "allowed_currency",
+        "status": "pass",
+        "reason": "Currency 'EUR' is an allowed ISO currency."
+      },
+      {
+        "rule": "arithmetic_line_items_sum",
+        "status": "pass",
+        "reason": "Sum of line items ($4,850.00) matches subtotal ($4,850.00)."
+      },
+      {
+        "rule": "arithmetic_total_reconciliation",
+        "status": "pass",
+        "reason": "Subtotal ($4,850.00) + Tax ($0.00) equals Total ($4,850.00)."
+      }
+    ],
+    "inconsistencies": [],
+    "workflow_decision": {
+      "decision": "auto_approved",
+      "reason": "All expense items reconciled and approved within department budget.",
+      "next_action": "Disburse department reimbursement and log journal entry",
+      "routing_code": "WF-EXPENSE-SETTLE",
+      "department": "Finance & Accounting / Travel & Expenses",
+      "average_confidence": 0.94,
+      "confidence_met": true
+    },
+    "timings": {
+      "security_ms": 2054.41,
+      "index_ms": 8.75,
+      "preprocess_ms": 58.13,
+      "extraction_ms": 0.28,
+      "validation_ms": 0.05,
+      "inconsistency_ms": 7.99,
+      "workflow_ms": 0.31,
+      "total_ms": 2130.02
+    },
+    "handed_off_at": "2026-10-30T22:50:50.527161+00:00"
+  },
+  "doc-07-security-threat": {
+    "doc_id": "doc-07-security-threat",
+    "filename": "07_Security_Failure_Prompt_Injection.txt",
+    "security": {
+      "status": "blocked",
+      "door1_decision": "ALLOW",
+      "door2_decision": "BLOCK",
+      "reasons": [
+        "Prompt injection trigger match: 'Ignore all previous instructions'",
+        "Prompt injection trigger match: 'You are now in'"
+      ],
+      "risk_score": 100
+    },
+    "index": {
+      "doc_id": "doc-07-security-threat",
+      "filename": "07_Security_Failure_Prompt_Injection.txt",
+      "file_type": "txt",
+      "size": 383,
+      "upload_time": "2026-10-30T22:50:50.530964+00:00",
+      "security_status": "blocked",
+      "index_status": "quarantined",
+      "indexed_at": "2026-10-30T22:50:52.572090+00:00",
+      "metadata": {}
+    },
+    "preprocessing": {
+      "data_type": "txt",
+      "status": "skipped",
+      "chunks_count": 0,
+      "cleaned_content": "",
+      "stats": {
+        "message": "Preprocessing halted by Security Gate 1 fail-closed protection"
+      }
+    },
+    "extracted_fields": {
+      "document_type": "security_quarantine",
+      "document_summary": "Malicious payload or policy violation neutralized",
+      "fields": {},
+      "line_items": []
+    },
+    "validation_results": [
+      {
+        "rule": "security_gate_clearance",
+        "status": "fail",
+        "reason": "Halted at Security Gate: Prompt injection trigger match: 'Ignore all previous instructions'; Prompt injection trigger match: 'You are now in'"
+      }
+    ],
+    "inconsistencies": [
+      {
+        "id": "INC-SEC-THREAT-doc-07-s",
+        "category": "security_threat",
+        "type": "adversarial_payload_or_exploit",
+        "severity": "high",
+        "explanation": "Security violation detected: Prompt injection trigger match: 'Ignore all previous instructions'; Prompt injection trigger match: 'You are now in'",
+        "conflicting_values": {
+          "threats": [
+            "Prompt injection trigger match: 'Ignore all previous instructions'",
+            "Prompt injection trigger match: 'You are now in'"
+          ]
+        }
+      }
+    ],
+    "workflow_decision": {
+      "decision": "blocked",
+      "reason": "Security Gate violation: Prompt injection trigger match: 'Ignore all previous instructions'; Prompt injection trigger match: 'You are now in'",
+      "next_action": "Isolate file into quarantine storage and alert Cyber SOC",
+      "routing_code": "WF-CYBER-CONTAINMENT",
+      "department": "Office of Information Security (OIS) / SOC",
+      "average_confidence": 0.0,
+      "confidence_met": false
+    },
+    "timings": {
+      "security_ms": 2033.37,
+      "index_ms": 9.77,
+      "total_ms": 2043.41
+    },
+    "handed_off_at": "2026-10-30T22:50:52.583465+00:00"
+  },
+  "c35b8248-f343-4838-9cdb-197e0b869ec3": {
+    "doc_id": "c35b8248-f343-4838-9cdb-197e0b869ec3",
+    "filename": "01_Clean_Invoice.txt",
+    "security": {
+      "status": "passed",
+      "risk_score": 20,
+      "reasons": []
+    },
+    "index": {
+      "doc_id": "c35b8248-f343-4838-9cdb-197e0b869ec3",
+      "filename": "01_Clean_Invoice.txt",
+      "file_type": "txt",
+      "size": 577,
+      "upload_time": "2026-10-30T23:02:48.029239",
+      "security_status": "passed",
+      "index_status": "indexed",
+      "indexed_at": "2026-10-30T23:04:12.163288+00:00",
+      "metadata": {}
+    },
+    "preprocessing": {
+      "data_type": "text/plain",
+      "status": "success",
+      "chunks_count": 1
+    },
+    "extracted_fields": {
+      "invoice_number": "oice",
+      "invoice_date": "2026-10-30",
+      "due_date": "2026-11-30",
+      "po_number": null,
+      "vendor_name": "Acme Industrial Supplies Inc.",
+      "vendor_address": null,
+      "vendor_tax_id": null,
+      "customer_name": null,
+      "customer_address": null,
+      "currency": "USD",
+      "subtotal": 2000.0,
+      "tax_rate": null,
+      "tax_amount": null,
+      "total_amount": 2200.0,
+      "payment_terms": null,
+      "line_items": [
+        {
+          "description": "Tuition / Educational Service Dues",
+          "quantity": 1.0,
+          "unit_price": 2200.0,
+          "amount": 2200.0,
+          "item_code": null,
+          "category": null,
+          "tax_rate": null
+        }
+      ],
+      "confidence_score": 0.85,
+      "raw_response": null
+    },
+    "validation_results": [
+      {
+        "rule_name": "required_field_check",
+        "passed": true,
+        "field": "vendor_name",
+        "expected": "non-null value",
+        "actual": "Acme Industrial Supplies Inc.",
+        "message": "Field present",
+        "severity": "info"
+      },
+      {
+        "rule_name": "required_field_check",
+        "passed": true,
+        "field": "invoice_number",
+        "expected": "non-null value",
+        "actual": "oice",
+        "message": "Field present",
+        "severity": "info"
+      },
+      {
+        "rule_name": "required_field_check",
+        "passed": true,
+        "field": "invoice_date",
+        "expected": "non-null value",
+        "actual": "2026-10-30",
+        "message": "Field present",
+        "severity": "info"
+      },
+      {
+        "rule_name": "required_field_check",
+        "passed": true,
+        "field": "total_amount",
+        "expected": "non-null value",
+        "actual": "2200.0",
+        "message": "Field present",
+        "severity": "info"
+      },
+      {
+        "rule_name": "date_format_check",
+        "passed": true,
+        "field": "invoice_date",
+        "expected": "valid date format",
+        "actual": "2026-10-30",
+        "message": "Invoice date normalized successfully",
+        "severity": "info"
+      },
+      {
+        "rule_name": "date_chronology_check",
+        "passed": true,
+        "field": "due_date",
+        "expected": ">= 2026-10-30",
+        "actual": "2026-11-30",
+        "message": "Payment due date is after or on invoice date",
+        "severity": "info"
+      },
+      {
+        "rule_name": "line_item_math_check",
+        "passed": true,
+        "field": "line_items[0].amount",
+        "expected": 2200.0,
+        "actual": 2200.0,
+        "message": "Line item #1 math correct",
+        "severity": "info"
+      },
+      {
+        "rule_name": "subtotal_sum_check",
+        "passed": false,
+        "field": "subtotal",
+        "expected": 2200.0,
+        "actual": 2000.0,
+        "message": "Stated subtotal 2000.0 does not match sum of lines 2200.0",
+        "severity": "warning"
+      },
+      {
+        "rule_name": "grand_total_arithmetic_check",
+        "passed": false,
+        "field": "total_amount",
+        "expected": 2000.0,
+        "actual": 2200.0,
+        "message": "Grand total 2200.0 differs from subtotal + tax (2000.0)",
+        "severity": "error"
+      },
+      {
+        "rule_name": "currency_consistency_check",
+        "passed": true,
+        "field": "currency",
+        "expected": "Valid ISO currency code",
+        "actual": "USD",
+        "message": "Recognized currency",
+        "severity": "info"
+      }
+    ],
+    "inconsistencies": [],
+    "workflow_decision": {
+      "decision": "auto_approved",
+      "reason": "Vendor invoice verified mathematically with 100% rule conformity.",
+      "next_action": "Schedule automated ACH disbursement batch in ERP ledger",
+      "routing_code": "WF-AP-INVOICE",
+      "department": "Accounts Payable / Procurement Logistics",
+      "average_confidence": 0.85,
+      "confidence_met": true
+    },
+    "timings": {
+      "total_ms": 650.0
+    },
+    "handed_off_at": "2026-10-30T23:04:12.169906+00:00"
+  },
+  "fe44d560-2c31-4b64-a3e7-f4fbf500333e": {
+    "doc_id": "fe44d560-2c31-4b64-a3e7-f4fbf500333e",
+    "filename": "03_Form_Missing_Required_Field.txt",
+    "security": {
+      "status": "passed",
+      "risk_score": 15,
+      "reasons": []
+    },
+    "index": {
+      "doc_id": "fe44d560-2c31-4b64-a3e7-f4fbf500333e",
+      "filename": "03_Form_Missing_Required_Field.txt",
+      "file_type": "txt",
+      "size": 293,
+      "upload_time": "2026-10-30T23:04:24.627802",
+      "security_status": "passed",
+      "index_status": "indexed",
+      "indexed_at": "2026-10-30T23:04:28.713685+00:00",
+      "metadata": {}
+    },
+    "preprocessing": {
+      "data_type": "text/plain",
+      "status": "success",
+      "chunks_count": 1
+    },
+    "extracted_fields": {
+      "invoice_number": null,
+      "invoice_date": "2026-10-30",
+      "due_date": "2026-11-20",
+      "po_number": null,
+      "vendor_name": "STUDENT FINANCIAL VOUCHER",
+      "vendor_address": null,
+      "vendor_tax_id": null,
+      "customer_name": "Alice Walker",
+      "customer_address": null,
+      "currency": "USD",
+      "subtotal": 3000.0,
+      "tax_rate": null,
+      "tax_amount": null,
+      "total_amount": 3000.0,
+      "payment_terms": "Fall 2026\nStudent Name",
+      "line_items": [
+        {
+          "description": "Tuition / Educational Service Dues",
+          "quantity": 1.0,
+          "unit_price": 3000.0,
+          "amount": 3000.0,
+          "item_code": null,
+          "category": null,
+          "tax_rate": null
+        }
+      ],
+      "confidence_score": 0.85,
+      "raw_response": null
+    },
+    "validation_results": [
+      {
+        "rule_name": "required_field_check",
+        "passed": true,
+        "field": "vendor_name",
+        "expected": "non-null value",
+        "actual": "STUDENT FINANCIAL VOUCHER",
+        "message": "Field present",
+        "severity": "info"
+      },
+      {
+        "rule_name": "required_field_check",
+        "passed": false,
+        "field": "invoice_number",
+        "expected": "non-null value",
+        "actual": null,
+        "message": "Field 'invoice_number' must be present and non-empty.",
+        "severity": "error"
+      },
+      {
+        "rule_name": "required_field_check",
+        "passed": true,
+        "field": "invoice_date",
+        "expected": "non-null value",
+        "actual": "2026-10-30",
+        "message": "Field present",
+        "severity": "info"
+      },
+      {
+        "rule_name": "required_field_check",
+        "passed": true,
+        "field": "total_amount",
+        "expected": "non-null value",
+        "actual": "3000.0",
+        "message": "Field present",
+        "severity": "info"
+      },
+      {
+        "rule_name": "date_format_check",
+        "passed": true,
+        "field": "invoice_date",
+        "expected": "valid date format",
+        "actual": "2026-10-30",
+        "message": "Invoice date normalized successfully",
+        "severity": "info"
+      },
+      {
+        "rule_name": "date_chronology_check",
+        "passed": true,
+        "field": "due_date",
+        "expected": ">= 2026-10-30",
+        "actual": "2026-11-20",
+        "message": "Payment due date is after or on invoice date",
+        "severity": "info"
+      },
+      {
+        "rule_name": "line_item_math_check",
+        "passed": true,
+        "field": "line_items[0].amount",
+        "expected": 3000.0,
+        "actual": 3000.0,
+        "message": "Line item #1 math correct",
+        "severity": "info"
+      },
+      {
+        "rule_name": "subtotal_sum_check",
+        "passed": true,
+        "field": "subtotal",
+        "expected": 3000.0,
+        "actual": 3000.0,
+        "message": "Subtotal matches sum of line items",
+        "severity": "info"
+      },
+      {
+        "rule_name": "grand_total_arithmetic_check",
+        "passed": true,
+        "field": "total_amount",
+        "expected": 3000.0,
+        "actual": 3000.0,
+        "message": "Grand total calculation matches",
+        "severity": "info"
+      },
+      {
+        "rule_name": "currency_consistency_check",
+        "passed": true,
+        "field": "currency",
+        "expected": "Valid ISO currency code",
+        "actual": "USD",
+        "message": "Recognized currency",
+        "severity": "info"
+      }
+    ],
+    "inconsistencies": [],
+    "workflow_decision": {
+      "decision": "auto_approved",
+      "reason": "Vendor invoice verified mathematically with 100% rule conformity.",
+      "next_action": "Schedule automated ACH disbursement batch in ERP ledger",
+      "routing_code": "WF-AP-INVOICE",
+      "department": "Accounts Payable / Procurement Logistics",
+      "average_confidence": 0.85,
+      "confidence_met": true
+    },
+    "timings": {
+      "total_ms": 650.0
+    },
+    "handed_off_at": "2026-10-30T23:04:28.720787+00:00"
+  }
+}

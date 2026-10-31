@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c87eb" />
+      <stop offset="100%" stop-color="#0155a3" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Background Shield -->
+  <path d="M64 12 C96 22 114 36 114 62 C114 94 88 114 64 122 C40 114 14 94 14 62 C14 36 32 22 64 12 Z" 
+        fill="url(#shieldGrad)" 
+        filter="url(#shadow)" />
+
+  <!-- Inner Doc & Check -->
+  <g fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Document outline -->
+    <path d="M46 40 L72 40 L84 52 L84 88 L46 88 Z" stroke-width="5" fill="#ffffff" fill-opacity="0.15" />
+    <path d="M72 40 L72 52 L84 52" stroke-width="4" />
+    <!-- Checkmark -->
+    <path d="M52 68 L62 78 L80 58" stroke="#10b981" stroke-width="7" />
+  </g>
+</svg>

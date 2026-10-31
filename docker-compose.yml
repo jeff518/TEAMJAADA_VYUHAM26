@@ -1,0 +1,180 @@
+version: '3.8'
+
+services:
+  # ==========================================
+  # Database: PostgreSQL 16
+  # ==========================================
+  db:
+    image: postgres:16-alpine
+    container_name: securedoc_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-securedoc_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-securedoc_secure_password_2026}
+      POSTGRES_DB: ${POSTGRES_DB:-securedoc_pipeline}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-securedoc_user} -d ${POSTGRES_DB:-securedoc_pipeline}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - securedoc_network
+
+  # ==========================================
+  # Message Broker & Cache: Redis 7
+  # ==========================================
+  redis:
+    image: redis:7-alpine
+    container_name: securedoc_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-securedoc_redis_pass_2026}
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-securedoc_redis_pass_2026}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - securedoc_network
+
+  # ==========================================
+  # Antivirus Daemon: ClamAV (Door 1 Engine)
+  # ==========================================
+  clamav:
+    image: clamav/clamav:latest
+    container_name: securedoc_clamav
+    restart: unless-stopped
+    ports:
+      - "3310:3310"
+    volumes:
+      - clamav_data:/var/lib/clamav
+      - quarantine_storage:/var/securedoc/quarantine:ro
+    healthcheck:
+      test: ["CMD-SHELL", "clamdscan --version || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    networks:
+      - securedoc_network
+
+  # ==========================================
+  # API Backend: FastAPI
+  # ==========================================
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: securedoc_api
+    restart: unless-stopped
+    environment:
+      ENVIRONMENT: production
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-securedoc_user}:${POSTGRES_PASSWORD:-securedoc_secure_password_2026}@db:5432/${POSTGRES_DB:-securedoc_pipeline}
+      REDIS_URL: redis://:${REDIS_PASSWORD:-securedoc_redis_pass_2026}@redis:6379/0
+      CELERY_BROKER_URL: redis://:${REDIS_PASSWORD:-securedoc_redis_pass_2026}@redis:6379/1
+      CELERY_RESULT_BACKEND: redis://:${REDIS_PASSWORD:-securedoc_redis_pass_2026}@redis:6379/2
+      CLAMAV_HOST: clamav
+      CLAMAV_PORT: 3310
+      JWT_SECRET: ${JWT_SECRET:-securedoc_super_secret_jwt_key_pipeline_2026_xyz}
+      JWT_ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 1440
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-placeholder_api_key}
+      UPLOAD_DIR: /var/securedoc/uploads
+      QUARANTINE_DIR: /var/securedoc/quarantine
+      MAX_FILE_SIZE_BYTES: 20971520
+      CORS_ORIGINS: http://localhost:3000,http://localhost:80,http://127.0.0.1:3000
+    volumes:
+      - quarantine_storage:/var/securedoc/quarantine
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      clamav:
+        condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/api/v1/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 4
+      start_period: 15s
+    networks:
+      - securedoc_network
+
+  # ==========================================
+  # Worker: Celery Task Execution
+  # ==========================================
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: securedoc_worker
+    restart: unless-stopped
+    command: celery -A app.workers.celery_app worker -l info -c 4 -Q pipeline_queue,quarantine_queue
+    environment:
+      ENVIRONMENT: production
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-securedoc_user}:${POSTGRES_PASSWORD:-securedoc_secure_password_2026}@db:5432/${POSTGRES_DB:-securedoc_pipeline}
+      REDIS_URL: redis://:${REDIS_PASSWORD:-securedoc_redis_pass_2026}@redis:6379/0
+      CELERY_BROKER_URL: redis://:${REDIS_PASSWORD:-securedoc_redis_pass_2026}@redis:6379/1
+      CELERY_RESULT_BACKEND: redis://:${REDIS_PASSWORD:-securedoc_redis_pass_2026}@redis:6379/2
+      CLAMAV_HOST: clamav
+      CLAMAV_PORT: 3310
+      JWT_SECRET: ${JWT_SECRET:-securedoc_super_secret_jwt_key_pipeline_2026_xyz}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-placeholder_api_key}
+      UPLOAD_DIR: /var/securedoc/uploads
+      QUARANTINE_DIR: /var/securedoc/quarantine
+      MAX_FILE_SIZE_BYTES: 20971520
+    volumes:
+      - quarantine_storage:/var/securedoc/quarantine
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      clamav:
+        condition: service_started
+    networks:
+      - securedoc_network
+
+  # ==========================================
+  # Frontend Dashboard: React + Vite + Nginx
+  # ==========================================
+  dashboard:
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile
+    container_name: securedoc_dashboard
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - securedoc_network
+
+# ==========================================
+# Persistent Volumes
+# ==========================================
+volumes:
+  postgres_data:
+    driver: local
+  quarantine_storage:
+    driver: local
+  clamav_data:
+    driver: local
+
+# ==========================================
+# Internal / External Network Bridge
+# ==========================================
+networks:
+  securedoc_network:
+    driver: bridge
+    name: securedoc_network
